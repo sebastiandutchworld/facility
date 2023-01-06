@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-extend="hr_resume_data_row">
+    <t t-jquery="tr.o_data_row" t-operation="replace">
+        <tr class="o_data_row" t-attf-class="o_data_row #{is_last? 'o_data_row_last' : ''}" t-att-data-id="id">
+            <td class="o_resume_timeline_cell position-relative pr-lg-2">
+                <div class="rounded-circle bg-info position-relative"/>
+            </td>
+            <td class="o_data_cell pt-0 w-100">
+                <div class="o_resume_line" t-att-data-id="id">
+                    <small class="o_resume_line_dates">
+                        <t t-if="data.row_display_type == 'cert'">
+                            <b>Achieved date: </b><b t-esc="data.date_start" t-options='{"widget": "date", "format": "MMM Y"}'/> <b t-if="data.date_end"> - Valid until: </b><b t-if="data.date_end" t-esc="data.date_end" t-options='{"widget": "date", "format": "MMM Y"}'/>
+                        </t>
+                        <t t-else="">
+                            <b t-esc="data.date_start" t-options='{"widget": "date", "format": "MMM Y"}'/> - <b t-if="data.date_end" t-esc="data.date_end" t-options='{"widget": "date", "format": "MMM Y"}'/> <b t-else="">Current</b>
+                        </t>
+                    </small>
+                    <h4 class="o_resume_line_title mt-2" t-esc="data.name"/>
+                    <t t-if="data.row_display_type == 'experience'">
+                        <h3 class="o_resume_line_title mt-2" t-esc="data.aircraft_type"/>
+                        <h3 class="o_resume_line_title mt-2" t-esc="data.company"/>
+                    </t>
+                    <p t-if="data.description" class="o_resume_line_desc" t-esc="data.description" style="white-space: pre-wrap;"/>
+                </div>
+            </td>
+        </tr>
+    </t>
+</t>
+</templates>

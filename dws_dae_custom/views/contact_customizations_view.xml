@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_partner_simple_form_naming">
+      <field name="name">Add firstname, lastname prefix and lastname</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_simple_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//h1//field[@name='name']/.." position="after">
+            <group attrs="{'invisible': [('is_company', '=', True)]}">
+              <field name="first_name" attrs=
+                      "{'required': [('is_company', '=', False),
+                  ('type', '=', 'contact')]}"/>
+              <field name="surname_prefix"/>
+              <field name="surname" attrs=
+                      "{'required': [('is_company', '=', False),
+                    ('type', '=', 'contact')]}"/>
+            </group>
+          </xpath>
+        </data>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="base_view_partner_form">
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+<!--        <xpath expr="//field[@name='name']" position="attributes">-->
+<!--          <attribute name="attrs">{'readonly': [('is_company', '=', False)], 'required': [('is_company', '=', True)]}-->
+<!--          </attribute>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='type']" position="before">-->
+<!--          <field name="initials" attrs="{'invisible': [('is_company','=', True)]}"/>-->
+<!--          <field name="first_name"-->
+<!--                 attrs="{'invisible': [('is_company','=', True)], 'required': [('is_company', '!=', True)]}"/>-->
+<!--          <field name="surname_prefix" attrs="{'invisible': [('is_company','=', True)]}"/>-->
+<!--          <field name="surname"-->
+<!--                 attrs="{'invisible': [('is_company','=', True)], 'required': [('is_company', '!=', True)]}"/>-->
+<!--          <field name="maiden_name" attrs="{'invisible': [('is_company','=', True)]}"/>-->
+<!--          <field name="maiden_name_prefix" attrs="{'invisible': [('is_company','=', True)]}"/>-->
+<!--          <field name="company_name2" attrs="{'invisible': True}"/>-->
+<!--        </xpath>-->
+        <xpath expr="//div[@class='oe_kanban_details']/field[@name='name']" position="before">
+          <strong>
+            <field name="type"/>
+          </strong>
+          <br/>
+        </xpath>
+        <xpath expr="//field[@name='child_ids']/form//field[@name='name']"
+               position="after">
+          <div class="oe_edit_only" colspan="2">
+            <field name="is_company" invisible="True"/>
+            <group attrs="{'invisible': [('is_company', '=', True)]}">
+              <field name="first_name" attrs=
+                      "{'required': [('is_company', '=', False),
+                  ('type', '=', 'contact')]}"/>
+              <field name="surname_prefix"/>
+              <field name="surname" attrs=
+                      "{'required': [('is_company', '=', False),
+                    ('type', '=', 'contact')]}"/>
+            </group>
+          </div>
+        </xpath>
+        <xpath expr="(//sheet)[2]/group/group[2]" position="attributes">
+          <attribute name="attrs">{'invisible': [('type', '=', 'foreign')]}</attribute>
+        </xpath>
+		<xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="before">
+            <field name="ubl_invoice" attrs="{'invisible': [('is_company','=', False)]}"/>
+            <field name="pdf_merge" attrs="{'invisible': [('is_company','=', False)]}"/>
+            <field name="company_registry" attrs="{'invisible': [('is_company','=', False)]}"/>
+            <field name="company_oin" attrs="{'invisible': [('is_company','=', False)]}"/>
+        </xpath>
+      </field>
+    </record>
+    <!--<record model="ir.ui.view" id="base_res_partner_kanban_view">-->
+    <!--<field name="model">res.partner</field>-->
+    <!--<field name="inherit_id" ref="base.res_partner_kanban_view"/>-->
+    <!--<field name="arch" type="xml">-->
+    <!--&lt;!&ndash;<xpath expr="//div[@class='oe_kanban_details']//field[@name='display_name']/.." position="before">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div attrs="{'invisible': [('type', '=', 'contact')]}">&ndash;&gt;-->
+    <!--&lt;!&ndash;<strong class="o_kanban_record_title oe_partner_heading">&ndash;&gt;-->
+    <!--&lt;!&ndash;<field name="type"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</strong>&ndash;&gt;-->
+    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+    <!--</field>-->
+    <!--</record>-->
+    <record model="ir.ui.view" id="base_view_users_form">
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="readonly">True</attribute>
+          <attribute name="required">False</attribute>
+        </xpath>
+        <xpath expr="/form/sheet/div/h1/field[@name='name']/.." position="after">
+          <group>
+            <field name="first_name"/>
+            <field name="surname_prefix"/>
+            <field name="surname"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_users_simple_form_naming">
+      <field name="name">Add firstname, lastname prefix and lastname</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_simple_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//h1//field[@name='name']" position="attributes">
+            <attribute name="required">False</attribute>
+          </xpath>
+          <xpath expr="//h1//field[@name='name']/.." position="after">
+            <group>
+              <field name="first_name"/>
+              <field name="surname_prefix"/>
+              <field name="surname"/>
+            </group>
+          </xpath>
+        </data>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+<!--    <record model="ir.ui.view" id="documents_document_view_form">-->
+<!--      <field name="model">documents.document</field>-->
+<!--      <field name="inherit_id" ref="documents.document_view_form"/>-->
+<!--      <field name="arch" type="xml">-->
+<!--        <xpath expr="//field[@name='type']" position="after">-->
+<!--          <field name="valid_from"/>-->
+<!--          <field name="valid_until"/>-->
+<!--          <field name="signal_period_months"/>-->
+<!--		</xpath>-->
+<!--      </field>-->
+<!--    </record>-->
+    <record model="ir.ui.view" id="documents_document_view_list">
+      <field name="model">documents.document</field>
+      <field name="inherit_id" ref="documents.documents_view_list"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='type']" position="after">
+          <field name="valid_from" optional="show"/>
+          <field name="valid_until" optional="show"/>
+          <field name="signal_period_months" optional="show"/>
+		</xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="documents_document_view_kanban">
+      <field name="model">documents.document</field>
+      <field name="inherit_id" ref="documents.document_view_kanban"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='activity_state']" position="after">
+          <field name="valid_from"/>
+          <field name="valid_until"/>
+          <field name="signal_period_months"/>
+		</xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

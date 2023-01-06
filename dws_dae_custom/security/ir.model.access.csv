@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_sheet_rule_user,employee_sheet_user,model_employee_sheet,base.group_user,1,1,1,1
+access_employee_sheet_manager,employee_sheet_manager,model_employee_sheet,base.group_erp_manager,1,1,1,1
+access_employee_sheet,access.employee.sheet,model_employee_sheet,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_employee_hours,access.employee.hours,model_employee_hours,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_employee_sheet_hours,access.employee.sheet.hours,model_employee_sheet_hours,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_employee_sheet_approvals,access.employee.sheet.approvals,model_employee_sheet_approvals,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_employee_sheet_invoice_wizard,access.employee.sheet.invoice.wizard,model_employee_sheet_invoice_wizard,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_sale_order_tags,access.sale.order.tags,model_sale_order_tags,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_csv_custom_csv_rule_user,csv.custom.csv.rule.user,model_csv_custom_csv,base.group_user,1,1,1,1
+access_hr_holidays_leave,hr.holidays.leave,model_hr_holidays_leave,hr_timesheet.group_timesheet_manager,1,1,1,1
+access_hr_holidays_leave_employee,hr.holidays.leave.employee,model_hr_holidays_leave_employee,hr_timesheet.group_timesheet_manager,1,1,1,1

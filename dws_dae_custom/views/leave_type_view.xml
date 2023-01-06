@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+        <record id="edit_hr_leave_type_ext" model="ir.ui.view">
+            <field name="name">hr.leave.type.form.inherit</field>
+            <field name="model">hr.leave.type</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='requires_allocation']" position="before">
+                    <field name="type"/>
+                    <field name="availability"/>
+                </xpath>
+            </field>
+        </record>
+  </data>
+</odoo>

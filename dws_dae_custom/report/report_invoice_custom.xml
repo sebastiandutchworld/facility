@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_custom" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@class='page']" position="inside">
+                <p t-if="o.partner_id.country_id.code != 'NL'">
+                    Invoice issued by the customer
+                </p>
+                <p>
+<!--                    <t t-if="o.company_id.name == 'Daedalus'">-->
+<!--                        Questions with respect to this invoice should be directed to: finance@daedalus.nl-->
+<!--                    </t>-->
+<!--                    <t t-elif="o.company_id.name == 'EML'">-->
+                        Questions with respect to this invoice should be directed to: finance@daedalus.nl
+<!--                    </t>-->
+<!--                    <t t-else="">-->
+<!--                        Questions with respect to this invoice should be directed to: finance@gearboks.nl-->
+<!--                    </t>-->
+                </p>
+                <ul class="list-unstyled">
+                    <t t-if="o.company_id.partner_id.bank_ids[0].bank_id.name">
+                        <li>
+                        Name of Bank: <span class="px-2" t-field="o.company_id.partner_id.bank_ids[0].bank_id.name" />
+                        </li>
+                        <li>
+                            IBAN: <span class="px-2" t-field="o.company_id.partner_id.bank_ids[0].acc_number" />
+                        </li>
+                         <li>
+                            BIC: <span class="px-2" t-field="o.company_id.partner_id.bank_ids[0].bank_id.bic" />
+                        </li>
+                        <li>
+                            <span t-field="o.company_id.partner_id.bank_ids[0].bank_id.street" /><br />
+                            <span t-field="o.company_id.partner_id.bank_ids[0].bank_id.zip" /> <br />
+                            <span t-field="o.company_id.partner_id.bank_ids[0].bank_id.city" /> <br />
+                            <span t-field="o.company_id.partner_id.bank_ids[0].bank_id.country" />
+                        </li>
+                    </t>
+                    <t t-else=""></t>
+                </ul>
+                <p>
+                    <t t-if="o.partner_id.name == 'Koninklijke Luchtmacht' or o.partner_id.parent_id.name == 'Koninklijke Luchtmacht'">
+                        Specification overtime and shift percentages<br/>
+                        Overtime A: 24,1 %<br/>
+                        Overtime B: 41,3 %<br/>
+                        Overtime C: 46,6 %<br/>
+                        Overtime D: 63,8 %<br/>
+                        Overtime E: 82,8 %<br/>
+                        Shift A: 13,3 %<br/>
+                        Shift B: 19,0 % (afwijkende werktijden)<br/>
+                        Shift C: 36,2 % (afwijkende werktijden)
+                    </t>
+                </p>
+            </xpath>
+            <xpath expr="//div[@id='informations']" position="inside">
+                <div class="col-auto mw-100 mb-2" t-if="o.contract_name">
+                    <strong>Contract Name:</strong>
+                    <p t-field="o.contract_name"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='informations']" position="after">
+                <div class="row mt32 mb32" t-if="o.signed_pdf_name" style="margin-left: 0px; margin-right: 0px;">
+                    <div class="col-xs-12">
+                        <p>
+                            <strong>Included Timesheet:</strong>
+                            <span t-field="o.signed_pdf_name"/>
+                        </p>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@t-if='o.invoice_origin']" position="replace"></xpath>
+        </template>
+        <template id="web_external_layout_boxed" inherit_id="web.external_layout_boxed">
+            <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']" position="replace">
+                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                    <div class="o_boxed_header">
+                    <div class="row mb8">
+                        <div class="col-4">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                        </div>
+                        <div class="col-8 text-right mb4">
+                            <h4 class="mt0" t-field="company.report_header"/>
+                            <div name="company_address" class="mb4">
+                                <span class="company_address" t-field="company.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

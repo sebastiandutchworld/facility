@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_pro_forma" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div t-if="doc.export_license_number" class="col-auto col-3 mw-100 mb-2">
+                <strong>Export License: </strong>
+                <p class="m-0" t-field="doc.export_license_number" />
+            </div>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_cnd"><strong>CND</strong></th>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="after">
+            <td id="condition">
+                <span t-field="line.product_id.product_conditions.code"/>
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='line.name']" position="replace">
+            <span t-field="line.product_id"/>
+            <br></br>
+            <t t-if="line.product_id.nsn">
+                <span>NSN: </span><span t-field="line.product_id.nsn"/>
+            </t>
+            <br></br>
+            <br></br>
+        </xpath>
+    </template>
+</odoo>

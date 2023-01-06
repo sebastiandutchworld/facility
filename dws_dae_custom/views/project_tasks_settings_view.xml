@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+      <field name="name">hr.timesheet.res.config.settings.view.form</field>
+      <field name="model">res.config.settings</field>
+      <field name="inherit_id" ref="hr_timesheet.res_config_settings_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='section_leaves']" position="inside">
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <strong>Toewijzingen</strong>
+                <br/>
+                <div class="row">
+                  <div class="text-muted col-md-8">Instellingen verlof toewijzingen</div>
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label for="legal_leave" class="col-md-5 o_light_label"/>
+                    <field name="legal_leave"/>
+                  </div>
+                  <div class="row mt16">
+                    <label for="hr_approver_partner" class="col-md-5 o_light_label"/>
+                    <field name="hr_approver_partner"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </xpath>
+        <xpath expr="//div[@data-key='hr_timesheet']" position="inside">
+          <h2>Other Hours - Project and Tasks</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <field name="task_update" attrs="{'invisible': 1}"/>
+                <strong>Project </strong>
+                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                <br/>
+                <div class="row">
+                  <div class="text-muted col-md-8">Select the project that should be used to write other hours to</div>
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label for="project_other_hours" class="col-md-5 o_light_label"/>
+                    <field name="project_other_hours"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <strong>Tasks </strong>
+                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                <br/>
+                <div class="row">
+                  <div class="text-muted col-md-8">Select the tasks for the other hours type</div>
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label for="task_vacation" class="col-md-5 o_light_label"/>
+                    <field name="task_vacation" domain="[('project_id','=',project_other_hours)]"/>
+                  </div>
+                  <div class="row">
+                    <label for="task_all" class="col-md-5 o_light_label"/>
+                    <field name="task_all" domain="[('project_id','=',project_other_hours)]"/>
+                  </div>
+                  <div class="row">
+                    <label for="task_adv" class="col-md-5 o_light_label"/>
+                    <field name="task_adv" domain="[('project_id','=',project_other_hours)]"/>
+                  </div>
+                  <div class="row">
+                    <label for="task_illness" class="col-md-5 o_light_label"/>
+                    <field name="task_illness" domain="[('project_id','=',project_other_hours)]"/>
+                  </div>
+                  <div class="row">
+                    <label for="task_nw" class="col-md-5 o_light_label"/>
+                    <field name="task_nw" domain="[('project_id','=',project_other_hours)]"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2>General Settings</h2>
+          <div class="row mt16 o_settings_container">
+            <div class="col-xs-12 col-md-6 o_setting_box">
+              <div class="o_setting_right_pane">
+                <strong>Mail</strong>
+                <br/>
+                <div class="row">
+                  <div class="text-muted col-md-8">Parameters for automated mailing</div>
+                </div>
+                <div class="content-group">
+                  <div class="row mt16">
+                    <label for="employee_timesheet_reminder_interval" class="col-md-5 o_light_label"/>
+                    <field name="employee_timesheet_reminder_interval"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

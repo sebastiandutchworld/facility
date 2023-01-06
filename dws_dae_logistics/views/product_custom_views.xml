@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="product_template_only_form_view_custom_nsn" model="ir.ui.view">
+        <field name="name">product.product_template_only_form_view.custom.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="nsn"/>
+                <field name="product_conditions"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="product_template_search_view_custom_nsn" model="ir.ui.view">
+        <field name="name">product.product_template_search_view.custom.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="nsn"/>
+                <field string="Vendor Product Name" name="vendor_product_name" filter_domain="[('seller_ids.product_name', 'ilike', self)]"/>
+                <field string="Vendor Product Code" name="vendor_product_code" filter_domain="[('seller_ids.product_code', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

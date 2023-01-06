@@ -1,0 +1,38 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="dws_dae_custom.portal_signature">
+        <form id="o_portal_sign_accept" method="POST">
+            <input type="hidden" name="csrf_token" t-att-value="widget.options.csrf_token"/>
+            <div class="form-group">
+                <t t-if="widget.options.actiontype == 'approval'">
+                    <label class="control-label" for="name">Approver ID</label>
+                    <input type="text" name="employee_id" id="o_portal_employee_id" class="form-control" t-att-value="widget.options.employee_id"/>
+                </t>
+                <t t-if="widget.options.actiontype == 'rejection'">
+                    <label class="control-label" for="name">Please describe in a couple of words your reason for rejection</label>
+                    <input type="textarea" name="reject_reason" id="o_portal_reject_reason" class="form-control"/>
+                </t>
+            </div>
+            <t t-if="widget.options.actiontype == 'approval'">
+                <div class="panel panel-default mt16 mb0" id="o_portal_sign_draw">
+                    <div class="panel-heading">
+                        <div class="pull-right">
+                            <a id="o_portal_sign_clear" class="btn btn-xs">Clear</a>
+                        </div>
+                        <strong>Draw your signature</strong>
+                    </div>
+                    <div id="o_portal_signature" class="panel-body" style="padding: 0"/>
+                </div>
+            </t>
+            <div class="mt16 pull-right">
+                 <button type="submit" class="btn btn-primary o_portal_sign_submit"><t t-esc="widget.options.signLabel or 'Accept &amp; Sign'"/></button>
+            </div>
+        </form>
+    </t>
+    <t t-name="daedalus_ems.portal_signature_success">
+        <div class="alert alert-success" role="alert">
+            <strong>Thank You !</strong><br />
+            <span t-esc="widget.success"/>
+            <a t-att-href="widget.redirect_url">Click here to see your document.</a>
+        </div>
+    </t>
+</templates>

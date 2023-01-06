@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="skills" name="My Skills">
+        <t t-call="portal.frontend_layout">
+            <t t-set="additional_title">Skills</t>
+            <div class="wrap">
+                <div class="container">
+                  <div class="row">
+                        <div class="col-md-12">
+                            <ol class="breadcrumb mt8">
+                                <li class="breadcrumb-item"><a href="/my/home"><i class="fa fa-home" role="img" aria-label="Home" title="Home"/></a></li>
+                                <li class="breadcrumb-item active">Resume &amp; Skills</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="row">
+                                <div class="table-responsive col-md-12">
+                                    <h4>My Resume lines </h4>
+                                    <div id="sendinbutton">
+                                    <button type="button" name="resume_submit" data-toggle="modal" class="btn btn-secondary btn-sm resume_submit" style="float:right;margin-top:-30px;">
+                                                                    SAVE CV
+                                                                </button>
+                                        <button type="button" name="resume_send_in" data-toggle="modal" class="btn btn-secondary btn-sm resume_send_in" style="float:right;margin-top:-30px;margin-right:59px;">
+                                                                    SEND IN
+                                                                </button>
+                                        <button t-if="employee_id" type="button" name="new_resume_line" data-toggle="modal" data-target=".modal_new_line" title="Create New line" aria-label="Add New line" class="btn btn-secondary btn-sm" style="float:right;margin-bottom:6px;">
+                                                                    ADD CV LINE
+                                        </button>
+
+                                    </div>
+                                    <t t-if="not grouped_lines">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr class="o_resume_group_header_portal ">
+                                                    <td class="o_group_name" colspan="100%">
+                                                        <span class="type_header my-0"> Add Resume lines... </span>
+                                                        <div class="modal fade modal_new_line" role="form">
+                                                    <div class="modal-dialog">
+                                                        <form method="POST" class="modal-content js_website_submit_form new_line_form">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="employee_id" class="emp_id" t-att-value="employee_id.id"/>
+                                                            <header class="modal-header">
+                                                                <h4 class="modal-title">Add New Line</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
+                                                            </header>
+                                                            <main class="modal-body" id="new-opp-dialog">
+                                                                <div class="form-group">
+                                                                    <label for="type">Type</label>
+                                                                    <select name="line_type_id" class="form-control time_off_type_select line_type_id" required="True">
+                                                                        <option/>
+                                                                        <t t-foreach="skill_type or []" t-as="stype">
+                                                                            <option t-att-value="stype.id">
+                                                                                <t t-esc="stype.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="name">Name</label>
+                                                                    <input type="text" class="form-control name" name="name" id="" placeholder="" required="required"/>
+                                                                </div>
+                                                                <div class="form-group d-none" id="additional_fields">
+                                                                    <label for="aicraft_type">Aicraft type</label>
+                                                                    <input type="text" class="form-control aircraft_type" name="aircraft_type" id="" placeholder="" required="required"/>
+                                                                    <label for="company">Company</label>
+                                                                    <input type="text" class="form-control company" name="company" id="" placeholder="" required="required"/>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="date_start">From</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="date_start" class="form-control date_from date_start" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="date_end">To</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="date_end" class="form-control date_to date_end" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="graduated_on_date">Graduated on</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="graduated_on_date" class="form-control date_to graduated_on_date" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="description">Description</label>
+                                                                    <textarea type="text" class="form-control description" name="description" id="" placeholder=""/>
+                                                                </div>
+                                                            </main>
+                                                            <footer class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                <button t-attf-class="btn btn-primary new_line_confirm">Confirm</button>
+                                                            </footer>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </t>
+                                    <table class="table table-borderless">
+                                        <t t-foreach="grouped_lines" t-as="line">
+                                            <thead>
+                                                <tr class="o_resume_group_header_portal ">
+                                                    <td class="o_group_name" colspan="100%">
+                                                        <span class="type_header my-0" t-field="line[0].line_type_id.name"/>
+                                                        <div t-if="employee_id" class="o_field_x2many_list_row_add d-inline pull-right">
+                                                            <button type="button" name="new_resume_line" data-toggle="modal" data-target=".modal_new_line" title="Create New line" aria-label="Add New line" class="btn btn-secondary btn-sm" t-att-data-context="{&quot;default_line_type_id&quot;:line[0].id}">
+                                                                    ADD
+                                                                </button>
+                                                        </div>
+                                                    <div class="modal fade modal_new_line" role="form">
+                                                    <div class="modal-dialog">
+                                                        <form method="POST" class="modal-content js_website_submit_form new_line_form">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="employee_id" class="emp_id" t-att-value="employee_id.id"/>
+                                                            <header class="modal-header">
+                                                                <h4 class="modal-title">Add New Line</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
+                                                            </header>
+                                                            <main class="modal-body" id="new-opp-dialog">
+                                                                <div class="form-group">
+                                                                    <label for="type">Type</label>
+                                                                    <select name="line_type_id" class="form-control time_off_type_select line_type_id" required="True">
+                                                                        <option/>
+                                                                        <t t-foreach="skill_type or []" t-as="stype">
+                                                                            <option t-att-value="stype.id">
+                                                                                <t t-esc="stype.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="name">Name</label>
+                                                                    <input type="text" class="form-control name" name="name" id="" placeholder=""/>
+                                                                </div>
+                                                                <div class="form-group d-none" id="additional_fields">
+                                                                    <label for="aicraft_type">Aicraft type</label>
+                                                                    <input type="text" class="form-control aircraft_type" name="aircraft_type" id="" placeholder="" required="required"/>
+                                                                    <label for="company">Company</label>
+                                                                    <input type="text" class="form-control company" name="company" id="" placeholder="" required="required"/>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="date_start">From</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="date_start" class="form-control date_from date_start" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="date_end">To</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="date_end" class="form-control date_to date_end" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label" for="graduated_on_date">Graduated on</label>
+                                                                        <div class="input-group date">
+                                                                            <input type="month" name="graduated_on_date" class="form-control date_to graduated_on_date" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text">
+                                                                                    <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="description">Description</label>
+                                                                    <textarea type="text" class="form-control description" name="description" id="" placeholder=""/>
+                                                                </div>
+                                                            </main>
+                                                            <footer class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                <button t-attf-class="btn btn-primary new_line_confirm">Confirm</button>
+                                                            </footer>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="mt16">
+                                                <t t-foreach="line" t-as="line">
+                                                    <tr class="o_data_row line_row" t-att-data-id="line.id">
+                                                        <td class="o_resume_timeline_cell position-relative pr-lg-2">
+                                                            <div class="rounded-circle bg-info position-relative"/>
+                                                        </td>
+                                                        <td class="o_data_cell pt-0 w-100" t-att-data-id="line.id">
+                                                            <a t-attf-href="/my/resume_line/#{line.id}" style="color: #4c4c4c;">
+                                                                <div class="o_resume_line" t-att-data-id="line.id">
+                                                                    <small class="o_resume_line_dates">
+                                                                        <t t-if="line[0].row_display_type == 'cert'">
+                                                                            <b>Achieved date: </b><b t-esc="line.date_start" t-options='{"widget": "date", "format": "MMM Y"}'/> <b t-if="line.date_end"> - Valid until: </b><b t-if="line.date_end" t-esc="line.date_end" t-options='{"widget": "date", "format": "MMM Y"}'/>
+                                                                        </t>
+                                                                        <t t-else="">
+                                                                            <b t-esc="line.date_start" t-options='{"widget": "date", "format": "MMM Y"}'/> - <b t-if="line.date_end" t-esc="line.date_end" t-options='{"widget": "date", "format": "MMM Y"}'/> <b t-else="">Current</b>
+                                                                        </t>
+                                                                        <a t-attf-href="/my/resume_line/#{line.id}" class="btn" href=""><i class="fa fa-eye"/></a>
+
+                                                                    </small>
+                                                                    <h4 class="o_resume_line_title mt-2" t-esc="line.name"/>
+                                                                    <t t-if="line[0].row_display_type == 'experience'">
+                                                                        <h4 class="o_resume_line_title mt-2" t-esc="line.aircraft_type"/>
+                                                                        <h4 class="o_resume_line_title mt-2" t-esc="line.company"/>
+                                                                    </t>
+                                                                    <p t-if="line.description" class="o_resume_line_desc" t-esc="line.description" style="white-space: pre-wrap;"/>
+                                                                </div>
+                                                            </a>
+                                                        </td>
+                                                        <td class="o_list_record_remove pr-3" t-att-data-id="line.id">
+                                                            <button name="delete" arial-label="Delete row" class="btn btn-default btn-sm remove_resume_line" t-att-data-id="line.id" confirm="Are you sure you want to delete this row?">
+                                                                <i class="fa fa-trash"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+
+                                        </t>
+                                    </table>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    <template id="manage_my_skills_link" inherit_id="portal.portal_layout">
+        <xpath expr="//div[hasclass('o_portal_my_details')]" position="inside">
+            <t t-if="employee">
+                <div class='manage_skills mt16'><a href="/my/skills">Manage Resume &amp; Skills</a></div>
+                <hr/>
+            </t>
+        </xpath>
+    </template>
+    
+    <template id="portal_my_resume_line_template" name="My Resume">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-md">
+                            <h5 class="mb-2 mb-md-0">
+                                <small class="text-muted" t-field="skill.line_type_id"></small>
+                                <span class="text-muted"> - </span>
+                                <span t-field="skill.display_name"/>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <div class="row">
+                        <div class="col-lg-5 mb-4 mb-lg-0">
+                            <div class="border-bottom d-flex justify-content-between py-2 mb-3 align-items-center">
+                                <h5 class="mb-0">
+                                    <span class="text-nowrap" t-esc="skill.name"/>
+                                </h5>
+                                <button type="button" data-toggle="modal" data-target=".modal_edit_resume_line" class="btn btn-link btn-sm"><i class="fa fa-pencil mr-1"/>Edit</button>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Type</strong>
+                                <div class="col">
+                                    <span t-if="skill.line_type_id" t-field="skill.line_type_id"/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <t t-if="skill.row_display_type == 'experience'">
+                                <div class="row mb-2">
+                                    <strong class="col-12 col-sm-4">Aircraft Type</strong>
+                                    <div class="col">
+                                        <span t-if="skill.aircraft_type" t-field="skill.aircraft_type"/>
+                                        <span t-else="" class="text-muted"> - </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <strong class="col-12 col-sm-4">Company</strong>
+                                    <div class="col">
+                                        <span t-if="skill.company" t-field="skill.company"/>
+                                        <span t-else="" class="text-muted"> - </span>
+                                    </div>
+                                </div>
+                            </t>
+                            <div class="row mb-2" t-if="skill.row_display_type != 'language'">
+                                <t t-if="skill.row_display_type == 'cert'">
+                                    <strong class="col-12 col-sm-4">Achieved date</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong class="col-12 col-sm-4">Date Start</strong>
+                                </t>
+                                <div class="col">
+                                    <span t-if="skill.date_start" t-field="skill.date_start" t-options='{"widget": "date", "format": "MMM Y"}'/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <div class="row mb-2" t-if="skill.row_display_type != 'language'">
+                                <t t-if="skill.row_display_type == 'cert'">
+                                    <strong class="col-12 col-sm-4">Valid until</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong class="col-12 col-sm-4">Date End</strong>
+                                </t>
+                                <div class="col">
+                                    <span t-if="skill.date_end" t-field="skill.date_end" t-options='{"widget": "date", "format": "MMM Y"}'/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <t t-if="skill.row_display_type == 'study'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Graduated</strong>
+                                <div class="col">
+                                    <span t-if="skill.graduated_on_date" t-field="skill.graduated_on_date" t-options='{"widget": "date", "format": "MMM Y"}'/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            </t>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Description</strong>
+                                <div class="col">
+                                    <span t-if="skill.description" t-field="skill.description"/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div role="dialog" class="modal fade modal_edit_resume_line">
+                                <div class="modal-dialog">
+                                    <form method="POST" class="js_accept_json modal-content js_website_submit_form edit_skill_form">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="skill_id" class="skill_id" t-att-value="skill.id"/>
+                                        <input type="hidden" name="line_type_id" class="line_type_id" t-att-value="skill.line_type_id.id"/>
+                                        <header class="modal-header">
+                                            <h4 class="modal-title">Edit Line</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
+                                        </header>
+                                        <main class="modal-body" id="sign-dialog">
+                                            <div class="form-group" t-if="skill.row_display_type != 'language'">
+                                                <label class="col-form-label" for="name">Name</label>
+                                                <input type="text" class="form-control name" name="name" t-att-value="skill.name" 
+                                                       placeholder="Name"/>
+                                            </div>
+<!--                                            <div class="form-group">-->
+<!--                                                <label for="type">Line Type</label>-->
+<!--                                                <select name="line_type_id" class="form-control  line_type_id" required="True">-->
+<!--                                                    <t t-foreach="skill_type" t-as="stype">-->
+<!--                                                        <option t-att-value="stype.id" t-att-selected="stype == skill.line_type_id">-->
+<!--                                                            <t t-esc="stype.name" />-->
+<!--                                                        </option>-->
+<!--                                                    </t>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+                                            <div t-if="skill.row_display_type == 'experience'" class="form-group" id="additional_fields_edit">
+                                                <label for="aicraft_type">Aicraft type</label>
+                                                <input type="text" class="form-control aircraft_type" name="aircraft_type" id="" placeholder="" t-att-value="skill.aircraft_type" required="required"/>
+                                                <label for="company">Company</label>
+                                                <input type="text" class="form-control company" name="company" id="" placeholder="" t-att-value="skill.company" required="required"/>
+                                            </div>
+                                            <div class="row" t-if="skill.row_display_type != 'language'">
+                                                <div class="form-group col-md-6">
+                                                    <t t-if="skill.row_display_type == 'cert'">
+                                                        <label class="control-label" for="date_start">Achieved date</label>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <label class="control-label" for="date_start">Date Start</label>
+                                                    </t>
+                                                    <div class="input-group date">
+                                                        <t t-if="skill.date_start">
+                                                            <input type="month" name="date_start" class="form-control date_start" t-att-value="skill.date_start.strftime('%Y-%m')" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <input type="month" name="date_start" class="form-control date_start" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <span class="fa fa-calendar" role="img" aria-label="Calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <t t-if="skill.row_display_type == 'cert'">
+                                                        <label class="control-label" for="date_start">Valid until</label>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <label class="control-label" for="date_start">Date End</label>
+                                                    </t>
+                                                    <div class="input-group date">
+                                                        <t t-if="skill.date_end">
+                                                            <input type="month" name="date_end" class="form-control date_end" t-att-value="skill.date_end.strftime('%Y-%m')" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <input type="month" name="date_end" class="form-control date_end" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <span class="fa fa-calendar" role="img" aria-label="Calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div t-if="skill.row_display_type == 'study'" class="form-group col-md-6">
+                                                    <label class="control-label" for="graduated_on_date">Graduated on</label>
+                                                    <div class="input-group date">
+                                                        <t t-if="skill.graduated_on_date">
+                                                            <input type="month" name="graduated_on_date" class="form-control date_to graduated_on_date" t-att-value="skill.graduated_on_date.strftime('%Y-%m')" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <input type="month" name="graduated_on_date" class="form-control date_to graduated_on_date" data-date-format="YYYY-MM" placeholder="YYYY-MM"/>
+                                                        </t>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <span class="fa fa-calendar" role="img" aria-label="Calendar"/>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea type="text" class="form-control description" name="description"><t t-esc="skill.description"/></textarea>
+                                            </div>
+                                        </main>
+                                        <footer class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button t-attf-class="btn btn-primary edit_skill_line_confirm">Confirm</button>
+                                        </footer>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="portal_resume_skill_breadcrumbs" name="Resume Skill Portal Breadcrumbs" inherit_id="portal.portal_breadcrumbs" priority="15">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="skill" class="breadcrumb-item">
+                <a t-if="skill" t-attf-href="/my/skills">
+                    Resume &amp; Skills
+                </a>
+            </li>
+            <li t-if="skill" class="breadcrumb-item active">
+                <span t-field="skill.display_name"/>
+            </li>
+        </xpath>
+    </template>
+</odoo>

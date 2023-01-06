@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_ext" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.ext</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="vacancies" string="Vacancies">
+                    <field name="vacancies" mode="tree,form">
+                        <tree editable="bottom" string="Vacancies" default_order="job_id">
+                            <field name="job_id"/>
+                            <field name="qty"/>
+                            <field name="employee_ids" widget="open_many2many_tags"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

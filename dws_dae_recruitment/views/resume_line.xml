@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="resume_line_type_view_form_ext" model="ir.ui.view">
+            <field name="name">hr.resume.line.type.form.ext</field>
+            <field name="model">hr.resume.line.type</field>
+            <field name="inherit_id" ref="hr_skills.hr_resume_line_type_tree_view"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="after">
+                        <field name="mandatory"/>
+                        <field name="display_type"/>
+                    </field>
+            </field>
+        </record>
+    </data>
+</odoo>

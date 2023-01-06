@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <!--#######################
+        # Message Move Wizard #
+        #######################-->
+    <!-- ## Form view ## -->
+    <record model="ir.ui.view" id="prt_message_move_form">
+        <field name="name">prt.message.move.form</field>
+        <field name="model">prt.message.move.wiz</field>
+        <field name="arch" type="xml">
+            <form create='false' edit='false' string="Move messages">
+                <group>
+                    <field name="model_to" context="{'message_move_wiz':1}" />
+                    <field name="notify" />
+                    <field name="is_conversation" invisible="1" />
+                    <field name="is_lead" invisible="1" />
+                    <field
+                        name="lead_delete"
+                        attrs="{'invisible':[('is_lead', '=', False)]}"
+                    />
+                    <field
+                        name="opp_delete"
+                        attrs="{'invisible':['|', ('is_lead', '=', False),('lead_delete', '=', False)]}"
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="message_move"
+                        string="Move"
+                        special="cancel"
+                        class="oe_link"
+                        invisible="1"
+                    />
+                    <button
+                        name="cancel"
+                        string="Cancel"
+                        special="cancel"
+                        class="oe_link"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

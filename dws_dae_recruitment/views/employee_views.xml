@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+      <record model="ir.ui.view" id="hr_view_employee_form_recruitment">
+      <field name="model">hr.employee</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="priority" eval="17"/>
+      <field name="arch" type="xml">
+          <field name="company_id" position="after">
+              <field name="applicant_id" invisible="1"></field>
+              <button type="object" name="open_applicant" string="Open applicant" icon="fa-edit" attrs="{'invisible': [('applicant_id', '=', [])]}"/>
+          </field>
+          <xpath expr="//div[@name='button_box']/button[@name='action_time_off_dashboard'][2]" position="replace">
+          </xpath>
+          <xpath expr="//button[@name='action_open_work_entries']" position="replace">
+          </xpath>
+      </field>
+      </record>
+  </data>
+</odoo>

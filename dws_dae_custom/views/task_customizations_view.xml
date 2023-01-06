@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+     <record model="ir.ui.view" id="project_view_task_form2">
+     <field name="model">project.task</field>
+     <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+		    <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="contact_list" invisible="1"/>
+                <field name="customer_contact" domain="['|',('id','in',contact_list),'&amp;',('commercial_company_name', '=', customer),('name', '!=', customer)]"/>
+                <field name="customer_contact2" domain="['|',('id','in',contact_list),'&amp;',('commercial_company_name', '=', customer),('name', '!=', customer),('id', '!=', customer_contact)]"/>
+                <field name="customer" attrs="{'invisible': 1}"/>
+                <field name="planned_date_begin" widget="date"/>
+                <field name="planned_date_end" widget="date"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="commuter_kilometers"/>
+                <field name="overtime"/>
+            </xpath>
+            <field name="user_ids" position="replace">
+                <field name="user_ids" class="o_task_user_field.name" widget="many2many_avatar_user"/>
+            </field>
+        </field>
+     </record>
+
+    <record model="ir.ui.view" id="project_view_task_tree2">
+     <field name="model">project.task</field>
+     <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+		    <xpath expr="//field[@name='user_ids']" position="after">
+            <field name="planned_date_begin" widget="date"/>
+            <field name="planned_date_end" widget="date"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

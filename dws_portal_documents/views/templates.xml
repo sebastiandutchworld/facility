@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="manage_documents_link" inherit_id="portal.portal_layout">
+        <xpath expr="//div[hasclass('o_portal_my_details')]" position="inside">
+<!--            <t t-if="candidate">-->
+                <div class='mt16'><a href="/my/documents">Manage Documents</a></div>
+                <hr/>
+<!--            </t>-->
+        </xpath>
+    </template>
+
+    <template id="my_documents" name="My Documents">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div>
+                        Manage Documents
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <span class="type_header my-0">Upload Documents</span>
+                    <form id="upload_document_form" action="/upload_document/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-model_name="hr.applicant" data-success-mode="redirect" hide-change-model="true">
+                        <div class="s_website_form_rows row s_col_no_bgcolor">
+                            <div class="form-group col-12 s_website_form_field s_website_form_custom" data-type="binary" data-name="Field">
+                                <div class="row s_col_no_resize s_col_no_bgcolor">
+                                    <label class="col-form-label col-sm-auto s_website_form_label" for="select_document">
+                                        <span class="s_website_form_label_content">Select document</span>
+                                    </label>
+                                    <div class="col-sm">
+                                        <input id="select_document" type="file" class="form-control s_website_form_input" name="Select document"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 s_website_form_submit" data-name="Upload Button">
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+
+                    <hr/>
+
+                    <span class="type_header my-0">My Documents</span>
+                    <div>
+                        <div class="row">
+                            <div class="col-lg-5 mb-4 mb-lg-0 font-weight-bold">
+                                Document
+                            </div>
+<!--                            <div class="col-lg-5 mb-4 mb-lg-0 font-weight-bold">-->
+<!--                                Creator-->
+<!--                            </div>-->
+                        </div>
+                        <t t-foreach="documents" t-as="document">
+                            <t t-set="downloadUrl" t-value="'/my/documents/download/' + str(document.attachment_id.id)"/>
+                            <t t-set="removeUrl" t-value="'/my/documents/remove/' + str(document.attachment_id.id)"/>
+                            <div class="row">
+                                <div t-if="has_tag == document.id" style="float:right;color:red;height:40px;">The document you want to delete is already approved by the HR Departement. Please contact <a href="mailto:recruitment@deadalus.nl">recruitment@deadalus.nl</a> </div>
+                                <div class="col-xs-12 mb-4 mb-lg-0">
+                                    <a t-att-href="downloadUrl" target="new" t-att-title="'Download ' + document.name" t-esc="document.name"/>
+                                    <a class="btn btn-secondary btn-block o_delete_btn"  t-att-href="removeUrl" title="Remove" style="width:fit-content;float:right;margin:-10px 10px 20px 10px;"><i class="fa fa-remove"/> Remove</a>
+                                    <a class="btn btn-primary btn-block o_download_btn"  t-att-href="downloadUrl" title="Download" style="width:fit-content;float:right;margin:-10px 10px 20px 10px;"><i class="fa fa-download"/> Download</a>
+                                </div>
+<!--                                <div class="col-lg-5 mb-4 mb-lg-0">-->
+<!--                                    <t t-esc="document.create_uid.name" />-->
+<!--                                </div>-->
+                            </div>
+                        </t>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="pay_meth_link_inherited" inherit_id="payment.pay_meth_link">
+        <xpath expr="//div[@t-if='acquirers_allowing_tokenization or existing_tokens']" position="replace">
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sh_product_code_unique
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.1alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-09 06:46+0000\n"
+"PO-Revision-Date: 2020-10-09 06:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sh_product_code_unique
+#: model:ir.model.fields,field_description:sh_product_code_unique.field_product_product__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: sh_product_code_unique
+#: model:ir.model.fields,field_description:sh_product_code_unique.field_product_product__id
+msgid "ID"
+msgstr "ICH WÜRDE"
+
+#. module: sh_product_code_unique
+#: code:addons/sh_product_code_unique/models/product.py:0
+#, python-format
+msgid "Internal reference must be unique!"
+msgstr "Interne Referenz muss eindeutig sein!"
+
+#. module: sh_product_code_unique
+#: model:ir.model.fields,field_description:sh_product_code_unique.field_product_product____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: sh_product_code_unique
+#: model:ir.model,name:sh_product_code_unique.model_product_product
+msgid "Product"
+msgstr "Produkt"

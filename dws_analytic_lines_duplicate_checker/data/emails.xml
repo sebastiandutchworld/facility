@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+         <!-- Template for notifying ticket@dutchworld.nl about a duplicate analytic lines in gearboks14 timesheets-->
+        <record id="email_duplicate_analytic_lines_notification" model="mail.template">
+            <field name="name">Duplicate analytic lines notification</field>
+            <field name="subject">Duplicate analytic lines notification</field>
+            <field name="email_to">ticket@dutchworld.nl </field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="dws_analytic_lines_duplicate_checker.model_aldc"/>
+            <field name="body_html">
+                <![CDATA[
+                <p>Dear admin,</p>
+                <p>Duplicate lines were detected</p>
+                %for duplicate in ctx.get('duplicates'):
+                <p>${duplicate}</p>
+                %endfor
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

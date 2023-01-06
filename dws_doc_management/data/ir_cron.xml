@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <record id="ir_cron_dws_doc_management" model="ir.cron">
+    <field name='name'>Employee Documents Update Metadata</field>
+    <field name='interval_number'>1</field>
+    <field name='interval_type'>days</field>
+    <field name="numbercall">-1</field>
+    <field name="active" eval="False"/>
+    <field name="doall" eval="False"/>
+    <field name="code">model.document_actions()</field>
+    <field name="state">code</field>
+    <field name="model_id" ref="model_document_cron"/>
+  </record>
+  <record id="ir_cron_dws_doc_management_conversion" model="ir.cron">
+    <field name='name'>Employee Documents Conversion Update</field>
+    <field name='interval_number'>1</field>
+    <field name='interval_type'>days</field>
+    <field name="numbercall">-1</field>
+    <field name="active" eval="False"/>
+    <field name="doall" eval="False"/>
+    <field name="code">model.conversion_actions()</field>
+    <field name="state">code</field>
+    <field name="model_id" ref="model_document_cron"/>
+  </record>
+</odoo>

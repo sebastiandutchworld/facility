@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--   <template id="report_assets_common2" inherit_id="web.report_assets_common">-->
+<!--       <xpath expr="//link[@href='/web/static/src/legacy/scss/layout_clean.scss']" position="replace">-->
+<!--           <link rel="stylesheet" type="text/scss" href="/dws_dae_custom/static/src/scss/layout_clean.scss"/>-->
+<!--       </xpath>-->
+       <!-- <xpath expr="." position="inside">
+           <link rel="stylesheet" type="text/scss" href="/dws_dae_custom/static/src/scss/custom.scss"></link>
+       </xpath> -->
+<!--   </template>-->
+
+</odoo>
+
+<!-- /web/static/src/legacy/scss/layout_clean.scss -->

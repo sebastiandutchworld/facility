@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="portal_timesheet_datepicker" model="ir.asset">
+            <field name="name">dws_doc_management assets</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/dws_doc_management/static/src/js/documents_inspector.js</field>
+        </record>
+    </data>
+</odoo>

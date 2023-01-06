@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="export_resume" model="ir.asset">
+            <field name="name">Backend Assets</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/dws_export_resume/static/src/js/select_company.js</field>
+    </record>
+
+    <record id="select_company_modal" model="ir.ui.view">
+        <field name="name">select.company.modal</field>
+        <field name="model">select.company</field>
+        <field name="arch" type="xml">
+            <form id="select_company_form" string="Select Company">
+                <group class="oe_title">
+                    <field name="company_id" options="{'no_create_edit': True}" />
+                </group>
+                <footer>
+                    <button name="generate_resume_for_selected_company"
+                            string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="select_company" model="ir.actions.act_window">
+        <field name="name">Select Company</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">select.company</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="select_company_modal"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

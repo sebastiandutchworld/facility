@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="hr_contract_hr_contract_view_form">
+      <field name="model">hr.contract</field>
+      <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+      <field name="arch" type="xml">
+        <!--xpath expr="//group[@name='duration_group']//span[@class='text-muted']" position="replace"/-->
+        <field name="date_end" position="after">
+          <field name="trial_date_end"/>
+          <field name="notice_period"/>
+        </field>
+        <xpath expr="//group[@name='salary']" position="replace">
+          <label for="wage"/>
+            <div class="o_row" name="wage" colspan="2">
+              <field name="wage" nolabel="1"/>
+              <span>/ month</span>
+          </div>
+          <div class="o_row" name="tax_credit" colspan="2"></div>
+          <div class="o_row" name="tax_credit" colspan="2">
+            <label for="tax_credit"/>
+            <field name="tax_credit"/>
+          </div>
+        </xpath>
+        <xpath expr="//group[@name='top_info_right']" position="after">
+          <group name="other" string="Other">
+            <field name="lease_car"/>
+            <field name="type_kilometer_arrangement"/>
+            <field name="above_legal_leave"/>
+            <field name="adv_leave"/>
+          </group>
+        </xpath>
+        <xpath expr="//field[@name='hr_responsible_id']" position="replace">
+          <field name="hr_responsible_id" required="0"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

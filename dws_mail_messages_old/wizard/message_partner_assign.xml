@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="cx_message_assign_partner">
+        <field name="name">cx.message.assign.partner</field>
+        <field name="model">cx.message.partner.assign.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Assign Author">
+                <group>
+                    <field name="name" />
+                    <field name="email" />
+                    <field name="same_email" />
+                    <field name="partner_id" readonly="1" />
+                </group>
+                <footer>
+                    <button
+                        name="cancel"
+                        string="Cancel"
+                        special="cancel"
+                        class="oe_link"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

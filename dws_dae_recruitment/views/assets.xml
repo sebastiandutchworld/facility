@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="portal_timesheet_datepicker" model="ir.asset">
+        <field name="name">Resume And Skills Portal Assets</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">/dws_dae_recruitment/static/src/js/skill_data.js</field>
+        <field name="path">/dws_dae_recruitment/static/src/js/resume_line.js</field>
+        <field name="path">/dws_dae_recruitment/static/src/js/skill_line.js</field>
+    </record>
+    <record id="resume_and_skills_assets_backend_dws" model="ir.asset">
+        <field name="name">Resume And Skills Assets</field>
+        <field name="bundle">web.assets_backend</field>
+        <field name="path">/dws_dae_recruitment/static/src/js/resume_widget.js</field>
+    </record>
+</odoo>

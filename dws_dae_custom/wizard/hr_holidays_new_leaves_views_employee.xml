@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_hr_holidays_leave_employee" model="ir.ui.view">
+    <field name="name">hr.holidays.leave.employee.form</field>
+    <field name="model">hr.holidays.leave.employee</field>
+    <field name="arch" type="xml">
+      <form string="Leaves allocation">
+        <group>
+          <field name="employee"/>
+        </group>
+        <footer>
+          <button name="create_annual_leaves" string="Create" type="object" class="btn-primary"/>
+          <button string="Cancel" special="cancel" class="btn-default"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record id="action_hr_holidays_leave_employee" model="ir.actions.act_window">
+    <field name="name">Leaves Allocation</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">hr.holidays.leave.employee</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+  <menuitem
+          id="menu_action_hr_holidays_leave_employee"
+          groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+          name="Leave allocation new employee"
+          parent="hr_holidays.menu_hr_holidays_approvals"
+          action="action_hr_holidays_leave_employee"
+          sequence="3"/>
+</odoo>

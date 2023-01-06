@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_skill_line_template" name="My Skill">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-md">
+                            <h5 class="mb-2 mb-md-0">
+                                <small class="text-muted" t-field="skill.skill_type_id"></small>
+                                <span class="text-muted"> - </span>
+                                <span t-field="skill.display_name"/>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <div class="row">
+                        <div class="col-lg-5 mb-4 mb-lg-0">
+                            <div class="border-bottom d-flex justify-content-between py-2 mb-3 align-items-center">
+                                <h5 class="mb-0">
+                                    <span class="text-nowrap" t-esc="skill.display_name"/>
+                                </h5>
+                                <button type="button" data-toggle="modal" data-target=".model_edit_skill_line" class="btn btn-link btn-sm"><i class="fa fa-pencil mr-1"/>Edit</button>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Skill Type</strong>
+                                <div class="col">
+                                    <span t-if="skill.skill_type_id" t-field="skill.skill_type_id"/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Skill</strong>
+                                <div class="col">
+                                    <span t-if="skill.skill_id" t-field="skill.skill_id"/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Skill level</strong>
+                                <div class="col">
+                                    <span t-if="skill.skill_level_id" t-field="skill.skill_level_id"/>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Level Progress(%)</strong>
+                                <div class="col">
+                                    <span t-if="skill.level_progress" t-field="skill.level_progress"></span>
+                                    <span t-else="" class="text-muted"> - </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+	                        <div role="dialog" class="modal fade model_edit_skill_line">
+	                            <div class="modal-dialog">
+	                                <form method="POST" class="js_accept_json modal-content js_website_submit_form edit_skill_line_form">
+	                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+	                                    <input type="hidden" name="skill_id" class="skill_id" t-att-value="skill.id"/>
+	                                    <header class="modal-header">
+	                                        <h4 class="modal-title">Edit Line</h4>
+	                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
+	                                    </header>
+	                                    <main class="modal-body" id="sign-dialog">
+	                                        <div class="form-group">
+	                                            <label for="type">Skill Type</label>
+	                                            <select name="skill_type_id" class="form-control skill_type_id" required="True" disabled="disabled">
+	                                                <t t-foreach="skill_type" t-as="stype">
+	                                                    <option t-att-value="stype.id" t-att-selected="stype == skill.skill_type_id">
+	                                                        <t t-esc="stype.name" />
+	                                                    </option>
+	                                                </t>
+	                                            </select>
+	                                        </div>
+	                                        <div class="form-group">
+                                                <label for="type">Skill</label>
+                                                <select name="skill_id" class="form-control skill_select_id" required="True">
+                                                    <option></option>
+                                                    <t t-foreach="hr_skill" t-as="s">
+                                                        <option t-att-value="s.id" t-att-selected="s == skill.skill_id" t-att-data-skilltype_id="s.skill_type_id.id">
+                                                            <t t-esc="s.name" />
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="type">Skill level</label>
+                                                <select name="skill_level_ids" class="form-control skill_level_ids" required="True">
+                                                    <option></option>
+                                                    <t t-foreach="hr_skill_level" t-as="l">
+                                                        <option t-att-value="l.id" t-att-selected="l == skill.skill_level_id" t-att-data-skill_id="l.skill_type_id.id">
+                                                            <t t-esc="l.name" />
+                                                            (<t t-esc="l.level_progress"></t>%)
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+	                                    </main>
+	                                    <footer class="modal-footer">
+	                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	                                        <button t-attf-class="btn btn-primary edit_skill_line_confirm">Confirm</button>
+	                                    </footer>
+	                                </form>
+	                            </div>
+	                        </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

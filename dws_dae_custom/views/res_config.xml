@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='default_taxes_setting_container']" position="after">
+                    <h2>PEPPOL Validation</h2>
+                    <div class="row mt16 o_settings_container" name="peppol_validation">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="peppol_boolean"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">PEPPOL Validation</span>
+                                <div class="text-muted">
+                                    Allow the option to select for PEPPOL Validation
+                                </div>
+                                <div class="mt16">
+                                    Recipient email address will be overwritten with:
+                                    <field name="peppol_email"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

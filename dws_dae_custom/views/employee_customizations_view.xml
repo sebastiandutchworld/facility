@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <record id="send_email" model="ir.actions.server">
+      <field name="name">Mail Portal Invitation</field>
+      <field name="model_id" ref="model_hr_employee"/>
+      <field name="binding_model_id" ref="dws_dae_custom.model_hr_employee"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = model.sudo().send_invitation_email()
+      </field>
+    </record>
+    <record id="timesheet_action_from_employee" model="ir.actions.act_window">
+        <field name="name">Timesheets</field>
+        <field name="res_model">account.analytic.line</field>
+        <field name="search_view_id" ref="hr_timesheet.hr_timesheet_line_search"/>
+        <field name="domain">[('project_id', '!=', False),('task_id.name','=',task),('date','&gt;=',context_today().strftime('%Y-01-01')),('date','&lt;',(context_today().strftime('%Y-%m-%d')))]</field>
+        <field name="context">{
+            'search_default_employee_id': [active_id],
+            'default_employee_id': active_id
+        }</field>
+    </record>
+	<record id="task_action_form_portal_timesheets" model="ir.actions.act_window">
+      <field name="name">Portal Urenstaten</field>
+      <field name="res_model">employee.sheet</field>
+      <field name="domain">[('user_id', '=', user_id_current_employee)]</field>
+      <!--<field name="domain">[('user_id','=',uid)]</field>-->
+      <!--<field name="domain">[('employee_id','=',current_employee_id)]</field>-->
+    </record>
+    <record id="task_action_form_employee" model="ir.actions.act_window">
+      <field name="name">Tasks</field>
+      <field name="res_model">project.task</field>
+      <field name="domain">[('user_ids', '=', user_id_current_employee)]</field>
+      <!--<field name="domain">[('user_id','=',uid)]</field>-->
+      <!--<field name="domain">[('employee_id','=',current_employee_id)]</field>-->
+    </record>
+    <record model="ir.ui.view" id="hr_view_employee_form">
+      <field name="model">hr.employee</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="priority" eval="17"/>
+      <field name="arch" type="xml">
+        <field name="user_id" position="replace">
+            <field name="user_id" string="Related User"/>
+        </field>  
+	    <field name="department_id" position="before">
+			<field name="collaborator_id"/>
+			<field name="banking_hours_start_date"/>
+			<field name="banking_hours_amount"/>
+			<field name="banking_hours" attrs="{'invisible': False}"/>
+	    </field>
+		<xpath expr="//field[@name='bank_account_id']" position="after">
+          <field name="thirty_p_ruling"/>
+        </xpath>
+		<xpath expr="//field[@name='name']/.." position="after">
+          <h2>
+            <field name="employee_label"/>
+          </h2>
+        </xpath>
+		<field name="emergency_contact" position="replace"/>
+		<field name="emergency_phone" position="after">
+			<field name="emergency_contact_address" context="{'show_emergency': 1}"
+                 options='{"always_reload": True, "highlight_first_line": True}'/>
+		</field>
+		<field name="emergency_phone" position="replace"/>
+		<field name="address_home_id" position="after">
+          <field name="foreign_address" context="{'show_address': 1}"
+                 options='{"always_reload": True, "highlight_first_line": True}'/>
+        </field>
+
+	    <!--portal timesheets button-->
+<!--446 -->
+          <xpath expr="//button[@name='action_open_contract_history']" position="after">
+		    <button class="oe_stat_button" type="action" name="%(task_action_form_portal_timesheets)d" icon="fa-calendar"
+				  context="{'current_employee_id': id, 'user_id_current_employee': user_id}">
+			<field name="sheet_count" widget="statinfo"/>
+		  </button>
+		</xpath>
+
+        <xpath expr="//button[@name='action_open_contract_history']" position="after">
+          <button class="oe_stat_button" type="action" name="%(task_action_form_employee)d" icon="fa-tasks"
+                  context="{'current_employee_id': id, 'user_id_current_employee': user_id}"> <!-- net veranderd -->
+            <field name="tasks_count" widget="statinfo"/>
+          </button>
+
+          <!--sale orders button-->
+          <button name="action_view_order" class="oe_stat_button" icon="fa-money" type="object" groups="hr_timesheet.group_hr_timesheet_user">
+              <field name="order_count" widget="statinfo"/>
+          </button>
+        </xpath>
+
+
+
+        <xpath expr="//page[@name='hr_settings']" position="after">
+              <page name="holiday" string="Verloftegoeden">
+                  <group><field name="reference_date"/></group>
+                  <group>
+                      <group string="Wettelijk verlof">
+                          <field name="transport_last_year"/>
+                          <field name="allocated_this_year"/>
+                          <field name="balance_this_year"/>
+                          <field name="booked_this_year"/>
+                          <field name="buildup_this_year"/>
+                          <button class="btn btn-primary" name="%(timesheet_action_from_employee)d" type="action" context="{'task': 'VAC'}">Geboekt dit jaar</button>
+                      </group>
+                      <group string="Bovenwettelijk verlof">
+                          <field name="transport_last_year_all"/>
+                          <field name="allocated_this_year_all"/>
+                          <field name="balance_this_year_all"/>
+                          <field name="booked_this_year_all"/>
+                          <field name="buildup_this_year_all"/>
+                          <button class="btn btn-primary" name="%(timesheet_action_from_employee)d" type="action" context="{'task': 'BWE'}">Geboekt dit jaar</button>
+                      </group>
+                      <group string="ADV">
+                          <field name="transport_last_year_adv"/>
+                          <field name="allocated_this_year_adv"/>
+                          <field name="balance_this_year_adv"/>
+                          <field name="booked_this_year_adv"/>
+                          <field name="buildup_this_year_adv"/>
+                          <button class="btn btn-primary" name="%(timesheet_action_from_employee)d" type="action" context="{'task': 'ADV'}">Geboekt dit jaar</button>
+                      </group>
+                  </group>
+              </page>
+        </xpath>
+      </field>
+    </record>
+    <!-- button still shows up, if they want it to be gone, they should make a ticket linkt to view is correct but the invisible attribute has changed -->
+    <record id="view_employee_form_leave_inherit_custom" model="ir.ui.view">
+        <field name="name">hr.employee.leave.form.inherit.custom</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_time_off_dashboard']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

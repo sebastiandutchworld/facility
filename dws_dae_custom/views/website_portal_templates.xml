@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="portal_timesheet_datepicker" model="ir.asset">
+            <field name="name">website_date_info_assets</field>
+            <field name="bundle">web.assets_frontend</field>
+            <field name="path">/dws_dae_custom/static/src/js/website_portal.js</field>
+            <field name="path">/dws_dae_custom/static/src/js/portal_signature.js</field>
+        </record>
+        <template id="portal_my_timesheets" name="Portal My timesheets: project entries"
+                  inherit_id="portal.portal_my_home"
+                  priority="30">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <a t-if="employee.first_contract_date" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between" href="/my/timesheets" title="Invoices &amp; Bills">Timesheets
+                    <span class="badge badge-secondary badge-pill" t-esc="timesheets_count"/>
+                </a>
+            </xpath>
+            <xpath expr="//div[hasclass('o_portal_my_home')]/h3[1]" position="replace">
+                <t t-if="employee.first_contract_date">
+                    <h3 class="page-header">
+                        Your Holidays
+                    </h3>
+                    <div style="margin:10px 0;">
+                        <span>
+                            <strong>Banking Hours:</strong>
+                            <t t-esc="banking_hours" t-esc-options='{"widget": "float", "precision": 2}'/>
+                            <br></br>
+                        </span>
+                    </div>
+                    <t t-if="expiring_holidays">
+                        <t t-foreach="expiring_holidays" t-as="expiring_holiday">
+                            <div style="margin:10px 0;">
+                                <span>
+                                    <strong>Your transported holiday of type "<span t-esc="expiring_holiday['type']"></span>" is about to expire! Expiration date: <span style="color:red;" t-esc="expiring_holiday['expiration_date']"></span></strong>
+                                </span>
+                            </div>
+                        </t>
+                    </t>
+                    <div style="margin:10px 0;">
+                        <span>
+                            <strong>Reference date:</strong>
+                            <input id="reference_date" type="date" t-att-value="reference_date" name="reference_date"/>
+                            <br></br>
+                        </span>
+                    </div>
+                    <div>
+                          <table class="table">
+                              <thead>
+                                  <tr class="active">
+                                      <td></td>
+                                      <td align="center">Legal leaves</td>
+                                      <t t-if="hide_all == False">
+                                        <td align="center">Above legal leaves</td>
+                                      </t>
+                                      <t t-if="hide_adv == False">
+                                        <td align="center">ADV</td>
+                                      </t>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>Transport last year</td>
+                                      <td align="center"><span class="badge" id="balance_ly" t-esc="('%.1f' % (holiday_hours['balance_ly'])).rstrip('0').rstrip('.')"/></td>
+                                      <t t-if="hide_all == False">
+                                            <td align="center"><span class="badge" id="balance_ly_all" t-esc="('%.1f' % (holiday_hours['balance_ly_all'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                      <t t-if="hide_adv == False">
+                                            <td align="center"><span class="badge" id="balance_ly_adv" t-esc="('%.1f' % (holiday_hours['balance_ly_adv'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                  </tr>
+                                  <tr>
+                                      <td>Allocated this year</td>
+                                      <td align="center"><span class="badge" id="allocated_cy" t-esc="('%.1f' % (holiday_hours['allocated_cy'])).rstrip('0').rstrip('.')"/></td>
+                                      <t t-if="hide_all == False">
+                                            <td align="center"><span class="badge" id="allocated_cy_all" t-esc="('%.1f' % (holiday_hours['allocated_cy_all'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                      <t t-if="hide_adv == False">
+                                            <td align="center"><span class="badge" id="allocated_cy_adv" t-esc="('%.1f' % (holiday_hours['allocated_cy_adv'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                  </tr>
+                                  <tr>
+                                      <td>Balance this year</td>
+                                      <td align="center"><span class="badge" id="balance_cy" t-esc="('%.1f' % (holiday_hours['balance_cy'])).rstrip('0').rstrip('.')"/></td>
+                                      <t t-if="hide_all == False">
+                                            <td align="center"><span class="badge" id="balance_cy_all" t-esc="('%.1f' % (holiday_hours['balance_cy_all'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                      <t t-if="hide_adv == False">
+                                            <td align="center"><span class="badge" id="balance_cy_adv" t-esc="('%.1f' % (holiday_hours['balance_cy_adv'])).rstrip('0').rstrip('.')"/></td>
+                                      </t>
+                                  </tr>
+                              </tbody>
+                          </table>
+                    </div>
+                </t>
+                <t t-else="">
+                    <p><strong>Thank you for signing up</strong></p>
+                    <p>You are ready for the next step!</p>
+                    <p>Finalize your registration, by creating your online resume. click on <t t-if="employee"><strong><a href="/my/skills"><button type="button" class="btn btn-primary btn-sm">Resume</button></a></strong></t><t t-else="">Manage Resume &amp; Skills</t>.</p>
+                    <p>Your detailed online resume is required to make the best matches for you and our customers.</p>
+                    <p>Therefore you must create an online resume with detailed work experience, which we will use to our customers. This online resume will be your business card.</p>
+                    <p>As soon as you confirm your online resume with the button "Send In" your online resume will be forwarded to our recruitment team.</p>
+                    <p>They will finalize the last step of your final registration and they will inform you asap.</p>
+                    <p>As soon as you have sent in your online resume , you see in your own environment the menu item "Manage Documents". Here you can upload your diploma’s, certificates and/or licenses. These must be PDF documents.</p>
+                    <p><strong>Attention!:</strong> For your own security, we strongly recommend you to activate the 2FA at <strong><a href="/my/security">Account security</a></strong>. Download the Google Authenticator app.</p>.
+                </t>
+            </xpath>
+        </template>
+        <template id="display_timesheets" name="Display timesheets">
+            <t t-call="portal.portal_layout">
+                <style>
+                    #myInput {
+                    background-position: 10px 10px;
+                    background-repeat: no-repeat;
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 12px 20px 12px 40px;
+                    border: 1px solid #ddd;
+                    margin-bottom: 12px;
+                    }
+                </style>
+                <h3 class="page-header">
+                    Your Timesheets
+                </h3>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="dropdown pull-right mr8 col-sm-6">
+                            <ul class="dropdown-menu" aria-labelledby="sortby">
+                                <li t-foreach="sortings" t-as="option" t-attf-class="#{sortby == option and 'active'}">
+                                    <a t-att-href="default_url + '?' + keep_query('date_begin', 'date_end', sortby=option)">
+                                        <span t-esc="sortings.get(option).get('label')"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="timesheet_table" class="table table-hover" width="100%">
+                    <thead>
+                        <tr class="active">
+                            <th width="15%">Date</th>
+                            <th width="65%">Description</th>
+                            <th width="20%">Status</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="timesheets" t-as="timesheet">
+                        <tr>
+                            <td width="15%">
+                                <a t-attf-href="/my/timesheet/{{timesheet.id}}?{{keep_query()}}">
+                                    <span t-field="timesheet.startdate"/>
+                                </a>
+                            </td>
+                            <td width="65%">
+                                <span t-field="timesheet.notes"/>
+                            </td>
+                            <td width="20%">
+								<t t-if="timesheet.status" t-esc="dict(timesheet.fields_get(allfields=['status'])['status']['selection'])[timesheet.status] if timesheet.status else ''"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </t>
+        </template>
+
+        <template id="approve_timesheet" name="New User">
+            <t t-call="website.layout">
+                <!-- modal relative to the actions Accept/Reject/Cancel -->
+                <div class="modal fade" id="modalaccept" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="accept" method="POST" t-att-data-approval-id="approval.id" t-att-data-token="token"
+                              class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="token"/>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &amp;times;
+                                </button>
+                                <h4 class="modal-title">Approve Sheet</h4>
+                            </div>
+                            <div class="modal-body" id="sign-dialog">
+                                <p>
+                                    <span>I agree that by signing this sheet .....</span>
+                                </p>
+                                <t t-call="dws_dae_custom.portal_signature">
+                                    <t t-set="object" t-value="approval"/>
+                                    <t t-set="actiontype" t-value="'approval'"/>
+                                    <t t-set="callUrl" t-value="'/timesheet/approve'"/>
+                                    <t t-set="accessToken" t-value="token"/>
+                                    <!--t t-set="signature" t-value="approval.partner_id.signature"/-->
+                                </t>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalreject" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="accept" method="POST" t-att-data-approval-id="approval.id" t-att-data-token="token"
+                              class="js_accept_json modal-content js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="token"/>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &amp;times;
+                                </button>
+                                <h4 class="modal-title">Reject Sheet</h4>
+                            </div>
+                            <div class="modal-body" id="sign-dialog">
+                                <p>
+                                    <span>I agree that by signing this sheet .....</span>
+                                </p>
+                                <t t-call="dws_dae_custom.portal_signature">
+                                    <t t-set="object" t-value="approval"/>
+                                    <t t-set="actiontype" t-value="'rejection'"/>
+                                    <t t-set="callUrl" t-value="'/timesheet/reject'"/>
+                                    <t t-set="accessToken" t-value="token"/>
+                                    <t t-set="signLabel" t-value="'Reject'"/>
+                                </t>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="wrap">
+                    <div class="container">
+                        <div class="oe_structure">
+                            <div class="row">
+                                <div class="col-12 mb16"/>
+                                <div>
+                                    <span>
+                                        <strong>Task(s) owner:</strong>
+                                        <t t-esc="sheet.user_id.name"/>
+                                    </span>
+                                </div>
+                                <div class="col-12 mb16" style="float: none;"/>
+                            </div>
+                            <!--<div class="row">-->
+                            <!--<div class="col-sm-4">-->
+                            <!--<ol class="breadcrumb mt8">-->
+                            <!--<li>-->
+                            <!--<a href="/my/home">-->
+                            <!--<i class="fa fa-home"/>-->
+                            <!--</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<a t-attf-href="/my/timesheets">My Timesheets</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<t>New Timesheet</t>-->
+                            <!--</li>-->
+                            <!--</ol>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <style>
+                                input { outline: none;
+                                        padding-left: 4px;
+                                        border-left-width: 1px;
+                                        border-bottom-width: 1px;
+                                        border-right-width: 0px;
+                                        border-top-width: 0px;
+                                        border-style: solid;
+                                        border-color: rgb(169,169,169);
+                                        -webkit-appearance: none;
+                                        border-radius: 0;}
+
+                                .el-line-height {line-height: 24px;}
+                                .el-line-height-iphone {line-height: 34px;}
+                                .el-height {height: 24px;}
+                                .el-height-iphone {height: 34px;}
+                                .row div {padding-left:0px;padding-right:0px;float:left;}
+                                .row input {width:100%;font-size:12px;}
+                                .gt {border-top:4px solid greenyellow;}
+                                .gb {border-bottom:4px solid greenyellow;}
+                                .gr {border-right:4px solid greenyellow;}
+                                .gl {border-left:4px solid greenyellow;}
+                                .gtz {border-top:4px; border-left:0px; border-right:0px; border-bottom: 0px;
+                                border-style: solid;
+                                border-color: transparent;}
+                                .bt {border-top:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .bb {border-bottom:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .br {border-right:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .bl {border-left:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .btz {border-top:0px;}
+                                .bbz {border-bottom:0px;}
+                                .brz {border-right:0px;}
+                                .blz {border-left:0px;}
+                                .tasktab {background-color:gainsboro;margin-top:4px;cursor:pointer;}
+                                .tasktab.activetasktab {background-color:greenyellow;}
+                                .activetask {background-color:greenyellow;}
+                                input.ro {background-color:gainsboro;}
+                                .holiday .weekday {color:red;}
+                                .holiday input {background-color:#ffb3b3 !important;}
+                            </style>
+                            <form action="/my/create_new_timesheet" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div style="margin-bottom:50px;"
+                                     t-attf-class="row o_website_portal_details #{'ro' if int(status) &gt; 0 else ''}">
+                                    <img class="d-none d-md-block" t-if="int(approval_status) == 1"
+                                         src="/dws_dae_custom/static/img/approved2.png" width="200"
+                                         style="position:absolute;z-index:100;top:300px;left:900px"/>
+                                    <img t-if="int(approval_status) == 2" src="/dws_dae_custom/static/img/rejected2.png"
+                                         width="200"
+                                         style="position:absolute;z-index:100;top:300px;left:900px"/>
+                                    <li t-foreach="tasks" t-as="task" class="task col-12" t-attf-id="task_#{task.id.id}">
+                                        <span>
+                                            <strong>#nr:
+                                                <t t-esc="task_index + 1"/>
+                                            </strong>
+                                            ->
+                                            <t t-esc="task.id.name"/>
+                                        </span>
+                                    </li>
+                                    <div class="col-12 mb16"></div>
+                                    <div class="col-12">
+                                        <div>Status:
+                                            <t t-esc="approval_status_text"></t>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb16"></div>
+                                    <div class="col-12" style="margin-bottom:10px;">
+                                        <div class="col-md-2 col-4 text-center"
+                                             style="height:40px;min-height:40px;font-size:20px;padding-top:5px;">Day
+                                            &amp; date
+                                        </div>
+                                        <div class="col-md-3 col-8 text-center"
+                                             style="height:20px;min-height:20px;element;background-color: greenyellow;margin-bottom:10px;">
+                                            Task Hours
+                                        </div>
+                                        <t t-if="hr_approval == True">
+                                            <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'} text-center"
+                                                 style="height:20px;min-height:20px;background-color: bisque;margin-bottom:10px;">
+                                                Other Hours
+                                            </div>
+                                            <div class="col-md-3 d-none d-md-block" t-if="not tasks"></div>
+                                            <div class="col-md-4 d-none d-sm-block text-center"
+                                             style="height:20px;min-height:20px;margin-bottom:10px;"></div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-md-7 col-0 text-center"
+                                             style="height:20px;min-height:20px;margin-bottom:10px;"><t t-esc="hr_approval"></t></div>
+                                        </t>
+
+                                        <div class="col-md-3 col-8" style="height:15px;min-height:15px;">
+                                            <div class="col-md-4 col-5 text-center"
+                                                 style="height:20px;min-height:20px;">Start
+                                            </div>
+                                            <div class="col-md-4 col-5 text-center"
+                                                 style="height:20px;min-height:20px;">End
+                                            </div>
+                                            <div class="col-md-4 col-2 text-center"
+                                                 style="height:20px;min-height:20px;">Hours
+                                            </div>
+                                        </div>
+                                        <t t-if="hr_approval == True">
+                                            <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}"
+                                                 style="height:15px;min-height:15px;">
+                                                <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">VAC</div>
+                                                <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">ADV</div>
+                                                <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">SLe</div>
+                                                <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">NWo</div>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-md-3 col-0" style="height:15px;min-height:15px;"></div>
+                                        </t>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="col-md-2 col-4 text-center">Tasks</div>
+                                        <div class="col-md-5 col-8">
+                                            <t t-foreach="tasks" t-as="task">
+                                                <div class="col-1 text-center tasktab"
+                                                     t-attf-id="tasktab_#{task.id.id}"
+                                                     style="height:20px;min-height:20px;">
+                                                    <t t-esc="task_index + 1"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <t t-foreach="dates" t-as="date">
+                                        <div t-attf-class="col-12 values #{'holiday' if date.strftime('%Y-%m-%d') in holidays or date.strftime('%w') == '0' or date.strftime('%w') == '6' else ''}">
+                                            <div t-attf-class="col-md-2 col-4 #{'gtz' if date.strftime('%w') == '1' else '' }">
+                                                <div class="col-md-6 col-4 weekday">
+                                                    <div t-esc="date.strftime('%A')" class="el-line-height el-height d-none d-sm-block"/>
+                                                    <div t-esc="date.strftime('%a')" class="el-line-height el-height d-sm-none d-md-none d-lg-none"/>
+                                                </div>
+                                                <div class="el-line-height el-height col-md-6 col-8 text-center">
+                                                    <div t-esc="date.strftime('%Y/%m/%d')"/>
+                                                </div>
+                                            </div>
+                                            <t t-foreach="tasks" t-as="task">
+                                                <div t-attf-id="task_block_#{task.id.id}_#{date.strftime('%Y%m%d')}"
+                                                     t-attf-class="col-md-3 col-8 task_block #{'ro' if datetime.datetime.strptime(str(task.id.planned_date_end),'%Y-%m-%d %H:%M:%S').date() &lt; date.date() or datetime.datetime.strptime(str(task.id.planned_date_begin),'%Y-%m-%d %H:%M:%S').date() &gt; date.date() else ''}">
+                                                    <t t-if="date.strftime('%w') == '1'">
+                                                        <div class="col-md-4 col-5 text-center gl gt">
+                                                            <input type="time"
+                                                                   t-attf-name="fromtime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height blz btz"></input>
+                                                        </div>
+                                                        <div class="col-md-4 col-5 text-center gt">
+                                                            <input type="time"
+                                                                   t-attf-name="totime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height btz"></input>
+                                                        </div>
+                                                        <div class="col-md-4 col-2 text-center gt gr">
+                                                            <input type="text"
+                                                                   t-attf-name="regular_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-value="hours['regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))] if 'regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height btz brz"></input>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div t-attf-class="col-md-4 col-5 text-center gl #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="time"
+                                                                   t-attf-name="fromtime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height blz #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div t-attf-class="col-md-4 col-5 text-center #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="time"
+                                                                   t-attf-name="totime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div t-attf-class="col-md-4 col-2 text-center gr #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="text"
+                                                                   t-attf-name="regular_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-value="hours['regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))] if 'regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height brz #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                            <t t-if="hr_approval == True">
+                                                <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}">
+                                                    <t t-if="date.strftime('%w') == '1'">
+                                                        <div class="col-3 text-center gtz">
+                                                            <input type="text"
+                                                                   t-att-value="hours['vacation_other_' + str(date.strftime('%Y-%m-%d'))] if 'vacation_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="vacation_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   class="el-height bl bt"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center gtz">
+                                                            <input type="text"
+                                                                   t-att-value="hours['adv_other_' + str(date.strftime('%Y-%m-%d'))] if 'adv_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="adv_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   class="el-height bt"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center gtz">
+                                                            <input type="text"
+                                                                   t-att-value="hours['illness_other_' + str(date.strftime('%Y-%m-%d'))] if 'illness_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="illness_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   class="el-height bt"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center gtz">
+                                                            <input type="text"
+                                                                   t-att-value="hours['nw_other_' + str(date.strftime('%Y-%m-%d'))] if 'nw_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="nw_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   class="el-height bt br"></input>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div class="col-3 text-center">
+                                                            <input type="text"
+                                                                   t-att-value="hours['vacation_other_' + str(date.strftime('%Y-%m-%d'))] if 'vacation_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="vacation_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-attf-class="el-height bl #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center">
+                                                            <input type="text"
+                                                                   t-att-value="hours['adv_other_' + str(date.strftime('%Y-%m-%d'))] if 'adv_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="adv_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-attf-class="el-height #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center">
+                                                            <input type="text"
+                                                                   t-att-value="hours['illness_other_' + str(date.strftime('%Y-%m-%d'))] if 'illness_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="illness_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-attf-class="el-height #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div class="col-3 text-center">
+                                                            <input type="text"
+                                                                   t-att-value="hours['nw_other_' + str(date.strftime('%Y-%m-%d'))] if 'nw_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-name="nw_other_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-attf-class="el-height br #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="col-md-3 col-0"></div>
+                                            </t>
+                                        </div>
+                                        <t t-if="date.strftime('%w') == '0'">
+                                            <div class="col-12 mb16"></div>
+                                        </t>
+                                    </t>
+                                    <div class="col-12">
+                                        <div class="col-md-2 col-4">
+                                            <div class="col-6 text-center el-line-height el-height">Totals</div>
+                                        </div>
+                                        <t t-foreach="tasks" t-as="task">
+                                            <div class="col-md-3 col-8 task_total"
+                                                 t-attf-id="task_total_#{task.id.id}">
+                                                <div class="col-md-4 col-5 text-center"></div>
+                                                <div class="col-md-4 col-5 text-center"></div>
+                                                <div class="col-md-4 col-2 text-center" style="float:right;">
+                                                    <input type="text" t-attf-name="regular_#{task.id.id}_total"
+                                                           t-attf-class="el-height bt #{'br' if 'task_last' else '' }"></input>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-if="hr_approval == True">
+                                            <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}">
+                                                <div class="col-3 text-center">
+                                                    <input type="text" t-attf-name="vacation_other_total"
+                                                           class="el-height bt"></input>
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    <input type="text" t-attf-name="adv_other_total"
+                                                           class="el-height bt"></input>
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    <input type="text" t-attf-name="illness_other_total"
+                                                           class="el-height bt"></input>
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    <input type="text" t-attf-name="nw_other_total"
+                                                           class="el-height bt br"></input>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-3"></div>
+                                        </t>
+                                    </div>
+                                    <div class="col-12 mb16"></div>
+                                    <div>
+                                        <strong>Notes: </strong>
+                                        <div t-esc="notes"/>
+                                    </div>
+                                    <div></div>
+                                    <div></div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <a id="rejectsheet" data-target="#modalreject" data-toggle="modal"
+                                               t-if="int(approval_status) &lt; 1" t-attf-sheetid="#{sheet.id}"
+                                               alt="Reject timesheet"
+                                               class="btn btn-danger btn-primary pull-right mb32"
+                                               style="margin-left:20px;">
+                                                Reject timesheet
+                                            </a>
+                                            <a id="approvesheet" data-target="#modalaccept" data-toggle="modal"
+                                               t-if="int(approval_status) &lt; 1" t-attf-sheetid="#{sheet.id}"
+                                               t-attf-token="#{token}"
+                                               alt="Approve timesheet"
+                                               class="btn btn-success btn-primary pull-right mb32"
+                                               style="margin-left:20px;">
+                                                Approve timesheet
+                                            </a>
+                                            <t t-if="hr_approval == False">
+                                                <a t-attf-href="/timesheet/downloadreport/#{sheet.id}/#{token}"
+                                                   alt="Download timesheet"
+                                                   class="btn btn-default btn-primary pull-right mb32"
+                                                   style="margin-left:20px;">
+                                                    Download Report
+                                                </a>
+                                                <a t-attf-href="/timesheet/downloadapprovedreport/#{sheet.id}/#{token}"
+                                                   t-if="approval.pdf_report"
+                                                   alt="Download approved timesheet"
+                                                   class="btn btn-default btn-primary pull-right mb32"
+                                                   style="margin-left:20px;">
+                                                    Download Approved Report
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="edit_timesheet" name="New User">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <div class="oe_structure">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <ol class="breadcrumb mt8">
+                                        <li>
+                                            <a href="/my/home">
+                                                <i class="fa fa-home"/>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a t-attf-href="/my/timesheets">My Timesheets</a>
+                                        </li>
+                                        <li>
+                                            <t>Edit Timesheet</t>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <style>
+                                input { outline: none;
+                                        padding-left: 4px;
+                                        border-left-width: 1px;
+                                        border-bottom-width: 1px;
+                                        border-right-width: 0px;
+                                        border-top-width: 0px;
+                                        border-style: solid;
+                                        border-color: rgb(169,169,169);
+                                        -webkit-appearance: none;
+                                        border-radius: 0;}
+
+                                .invalid {color: red;}
+                                .el-line-height {line-height: 24px;}
+                                .el-line-height-iphone {line-height: 34px;}
+                                .el-height {height: 24px;}
+                                .el-height-iphone {height: 34px;}
+                                .other-hours-heading-iphone {font-size: 12px;}
+                                .row div {padding-left:0px;padding-right:0px;float:left;}
+                                .row input {width:100%;font-size:12px;}
+                                .gt {border-top:4px solid greenyellow;}
+                                .gb {border-bottom:4px solid greenyellow;}
+                                .gr {border-right:4px solid greenyellow;}
+                                .gl {border-left:4px solid greenyellow;}
+                                .gtz {border-top:4px; border-left:0px; border-right:0px; border-bottom: 0px;
+                                border-style: solid;
+                                border-color: transparent;}
+                                .bt {border-top:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .bb {border-bottom:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .br {border-right:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .bl {border-left:1px;border-style: solid;border-color: rgb(169,169,169);}
+                                .btz {border-top:0px;}
+                                .bbz {border-bottom:0px;}
+                                .brz {border-right:0px;}
+                                .blz {border-left:0px;}
+                                .tasktab {background-color:gainsboro;margin-top:4px;cursor:pointer;}
+                                .tasktab.activetasktab {background-color:greenyellow;}
+                                .activetask {background-color:greenyellow;}
+                                input.ro {background-color:gainsboro;}
+                                .holiday .weekday {color:red;}
+                                .holiday input {background-color:#ffb3b3 !important;}
+                                .task_block.workday input {background-color:white !important;}
+                                .ro.workday input {background-color:gainsboro !important;}
+                                .ro .workday input {background-color:gainsboro !important;}
+                                .required {position: relative;}
+                                .required::before,.required::after {content: '';position: absolute;top: 0;right:
+                                0;border-color:
+                                transparent;border-style: solid;}
+                                .required::before {border-width: 0.3em;border-right-color: red;border-top-color: red;}
+                                .required::after {border-radius: 0.4em;border-width: 0.3em;border-right-color:
+                                red;border-top-color:
+                                red;}
+                            </style>
+<!--                             value-decimals='2'-->
+                            <div class="col-12 mb16" style="float: none;"/>
+                            <form action="/my/create_new_timesheet" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div style="margin-bottom:50px;"
+                                     t-attf-class="row o_website_portal_details #{'ro' if int(status) &gt; 0 else ''}">
+                                    <li t-foreach="tasks" t-as="task" class="task col-12" t-attf-id="task_#{task.id.id}">
+                                        <span>
+                                            <strong>#
+                                                <t t-esc="task_index + 1"/>
+                                            </strong>
+                                            ->
+                                            <t t-esc="task.id.name"/>
+                                        </span>
+                                    </li>
+                                    <div class="col-12 mb16"/>
+                                    <div class="col-12" style="margin-bottom:10px;">
+                                        <div class="col-md-2 col-4 text-center"
+                                             style="height:40px;min-height:40px;font-size:20px;padding-top:5px;">Day
+                                            &amp; date
+                                        </div>
+                                        <div class="col-md-3 col-4 text-center"
+                                             style="height:20px;min-height:20px;element;background-color: greenyellow;margin-bottom:10px;"
+                                             t-if="tasks">Task Hours
+                                        </div>
+                                        <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'} text-center"
+                                             style="height:20px;min-height:20px;background-color: bisque;margin-bottom:10px;">
+                                            Other Hours
+                                        </div>
+                                        <div class="col-md-3 d-none d-md-block" t-if="not tasks"></div>
+                                        <div class="col-md-4 d-none d-sm-block text-center"
+                                             style="height:20px;min-height:20px;margin-bottom:10px;"></div>
+
+
+                                        <div class="col-md-3 col-4" style="height:15px;min-height:15px;"
+                                             t-if="tasks">
+                                            <div class="col-4 text-center other-hours-heading" style="height:20px;min-height:20px;">Start</div>
+                                            <div class="col-4 text-center other-hours-heading" style="height:20px;min-height:20px;">End</div>
+                                            <div class="col-4 text-center other-hours-heading" style="height:20px;min-height:20px;">Hours</div>
+                                        </div>
+                                        <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}"
+                                             style="height:15px;min-height:15px;">
+                                            <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">VAC</div>
+                                            <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">ADV</div>
+                                            <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">SLe</div>
+                                            <div class="col-3 text-center other-hours-heading" style="height:20px;min-height:20px;">NWo</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" t-if="tasks">
+                                        <div class="col-md-2 col-4 text-center">Tasks</div>
+                                        <div class="col-md-5 col-8">
+                                            <t t-foreach="tasks" t-as="task">
+                                                <div class="col-1 text-center tasktab"
+                                                     t-attf-id="tasktab_#{task.id.id}"
+                                                     style="height:20px;min-height:20px;">
+                                                    <t t-esc="task_index + 1"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <t t-foreach="dates" t-as="date">
+                                        <div t-attf-class="col-12 values #{'holiday' if date.strftime('%Y-%m-%d') in holidays or date.strftime('%w') == '0' or date.strftime('%w') == '6' else ''}">
+                                            <div t-attf-class="col-md-2 col-4 #{'gtz' if date.strftime('%w') == '1' else '' }">
+                                                <div class="col-md-6 col-4 weekday">
+                                                    <div t-esc="date.strftime('%A')"
+                                                         class="d-none d-sm-block el-line-height el-height"/>
+                                                    <div class="d-sm-none d-md-none d-lg-none el-line-height el-height"
+                                                         t-esc="date.strftime('%a')"/>
+                                                </div>
+                                                <div class="col-md-6 col-8 text-center">
+                                                    <div t-esc="date.strftime('%Y/%m/%d')"
+                                                         class="el-line-height el-height"/>
+                                                </div>
+                                            </div>
+                                            <t t-foreach="tasks" t-as="task">
+                                                <div t-attf-id="task_block_#{task.id.id}_#{date.strftime('%Y%m%d')}"
+                                                     t-attf-class="col-md-3 col-4 task_block #{'ro' if datetime.datetime.strptime(str(task.id.planned_date_end),'%Y-%m-%d %H:%M:%S').date() &lt; date.date() or datetime.datetime.strptime(str(task.id.planned_date_begin),'%Y-%m-%d %H:%M:%S').date() &gt; date.date() else ''} #{'holiday' if date.strftime('%Y-%m-%d') in task_holidays[task.id.id]['holidays'] else ''} #{'workday' if date.strftime('%Y-%m-%d') in task_holidays[task.id.id]['workdays'] else ''} #{'overtime' if task.id.overtime else ''} ">
+                                                    <t t-if="date.strftime('%w') == '1'">
+                                                        <div t-attf-class="col-4 text-center gl gt">
+                                                            <input type="time"
+                                                                   t-attf-name="fromtime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height blz btz"></input>
+                                                        </div>
+                                                        <div t-attf-class="col-4 text-center gt">
+                                                            <input type="time"
+                                                                   t-attf-name="totime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height btz"></input>
+                                                        </div>
+                                                        <div class="col-4 text-center gt gr">
+                                                            <input type="text"
+                                                                   t-attf-name="regular_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-value="hours['regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))] if 'regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   class="el-height btz brz"></input>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div t-attf-class="col-4 text-center gl #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="time"
+                                                                   t-attf-name="fromtime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'fromtime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height blz #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div t-attf-class="col-4 text-center #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="time"
+                                                                   t-attf-name="totime_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-timevalue="datetime.datetime.strptime(str(hours['totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))]),'%Y-%m-%d %H:%M:%S').strftime('%H:%M') if 'totime_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                        <div t-attf-class="col-4 text-center gr #{'gb' if date.strftime('%w') == '0' else '' }">
+                                                            <input type="text"
+                                                                   t-attf-name="regular_#{task.id.id}_#{date.strftime('%Y_%m_%d')}"
+                                                                   t-att-value="hours['regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d'))] if 'regular_' + str(task.id.id) + '_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                                   t-attf-class="el-height brz #{'bbz' if date.strftime('%w') == '0' else '' }"></input>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                            <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}">
+                                                <t t-if="date.strftime('%w') == '1'">
+                                                    <div class="col-3 text-center gtz">
+                                                        <input type="text"
+                                                               t-att-value="hours['vacation_other_' + str(date.strftime('%Y-%m-%d'))] if 'vacation_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="vacation_other_#{date.strftime('%Y_%m_%d')}"
+                                                               class="el-height bl bt"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center gtz">
+                                                        <input type="text"
+                                                               t-att-value="hours['adv_other_' + str(date.strftime('%Y-%m-%d'))] if 'adv_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="adv_other_#{date.strftime('%Y_%m_%d')}"
+                                                               class="el-height bt"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center gtz">
+                                                        <input type="text"
+                                                               t-att-value="hours['illness_other_' + str(date.strftime('%Y-%m-%d'))] if 'illness_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="illness_other_#{date.strftime('%Y_%m_%d')}"
+                                                               class="el-height bt"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center gtz">
+                                                        <input type="text"
+                                                               t-att-value="hours['nw_other_' + str(date.strftime('%Y-%m-%d'))] if 'nw_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="nw_other_#{date.strftime('%Y_%m_%d')}"
+                                                               class="el-height bt br"></input>
+                                                    </div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div class="col-3 text-center">
+                                                        <input type="text"
+                                                               t-att-value="hours['vacation_other_' + str(date.strftime('%Y-%m-%d'))] if 'vacation_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="vacation_other_#{date.strftime('%Y_%m_%d')}"
+                                                               t-attf-class="el-height bl #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center">
+                                                        <input type="text"
+                                                               t-att-value="hours['adv_other_' + str(date.strftime('%Y-%m-%d'))] if 'adv_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="adv_other_#{date.strftime('%Y_%m_%d')}"
+                                                               t-attf-class="el-height #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center">
+                                                        <input type="text"
+                                                               t-att-value="hours['illness_other_' + str(date.strftime('%Y-%m-%d'))] if 'illness_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="illness_other_#{date.strftime('%Y_%m_%d')}"
+                                                               t-attf-class="el-height #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                    </div>
+                                                    <div class="col-3 text-center">
+                                                        <input type="text"
+                                                               t-att-value="hours['nw_other_' + str(date.strftime('%Y-%m-%d'))] if 'nw_other_' + str(date.strftime('%Y-%m-%d')) in hours else ''"
+                                                               t-attf-name="nw_other_#{date.strftime('%Y_%m_%d')}"
+                                                               t-attf-class="el-height br #{'bb' if date.strftime('%w') == '0' else '' }"></input>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <t t-if="date.strftime('%w') == '0'">
+                                            <div class="col-12 mb16"></div>
+                                        </t>
+                                    </t>
+                                    <div class="col-12">
+                                        <div class="col-md-2 col-4">
+                                            <div class="col-6"></div>
+                                            <div class="col-6 text-center el-line-height el-height">Totals</div>
+                                        </div>
+                                        <t t-foreach="tasks" t-as="task">
+                                            <div class="col-md-3 col-4 task_total"
+                                                 t-attf-id="task_total_#{task.id.id}">
+                                                <div class="col-4 text-center"></div>
+                                                <div class="col-4 text-center"></div>
+                                                <div class="col-4 text-center" style="float:right;">
+                                                    <input type="text" t-attf-name="regular_#{task.id.id}_total"
+                                                           class="el-height bt"></input>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <div t-attf-class="col-md-3 #{'col-8' if not tasks else 'col-4'}">
+                                            <div class="col-3 text-center">
+                                                <input type="text" t-attf-name="vacation_other_total"
+                                                       class="el-height bt"></input>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <input type="text" t-attf-name="adv_other_total"
+                                                       class="el-height bt"></input>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <input type="text" t-attf-name="illness_other_total"
+                                                       class="el-height bt"></input>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <input type="text" t-attf-name="nw_other_total"
+                                                       class="el-height bt br"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb16"></div>
+                                    <div class="col-12">
+                                        <div class="col-12 mb16"></div>
+                                        <div class="col-1 el-line-height el-height">Notes:</div>
+                                        <div class="col-11 col-md-7 col-lg-7">
+                                            <textarea name="notes" rows="4" style="width: 100%;"><t t-esc="notes"/></textarea>
+<!--                                            <input type="text" name="notes" t-att-value="notes"-->
+<!--                                                   class="el-height bt br"/>-->
+                                        </div>
+                                        <div class="col-12 mb16"></div>
+                                        <div class="col-12" id="errortext" style="color:red;display:none;">Error:
+                                            Please make sure that
+                                            you completed all required fields marked with a red corner!
+                                        </div>
+                                        <div class="col-12" id="errortext-hours" style="color:red;display:none;">Error:
+                                            Please make sure that hours are not: negative, greater than 24 or more than 2 decimals!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <a id="confirmsheet" t-if="int(status) &lt; 1" t-attf-sheetid="#{sheet.id}"
+                                               alt="Confirm current timesheet"
+                                               class="btn btn-default btn-primary pull-right mb32"
+                                               style="margin-left:20px;">
+                                                Confirm timesheet
+                                            </a>
+                                            <a id="savesheet" t-if="int(status) &lt; 1" t-attf-sheetid="#{sheet.id}"
+                                               alt="Save current timesheet"
+                                               class="btn btn-default btn-primary pull-right mb32"
+                                               style="margin-left:20px;">
+                                                Save timesheet
+                                            </a>
+                                            <a t-attf-href="/timesheet/downloadreport/#{sheet.id}"
+                                               alt="Download timesheet"
+                                               class="btn btn-default btn-primary pull-right mb32"
+                                               style="margin-left:20px;">
+                                                Download Report
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_signature" name="Ask Signature">
+            <div t-att-class="'o_portal_signature_form2'"
+                 t-att-data-res-model="object._name"
+                 t-att-data-actiontype="actiontype"
+                 t-att-data-res-id="object.id"
+                 t-att-data-call-url="callUrl"
+                 t-att-data-sign-label="signLabel"
+                 t-att-data-signature="signature"
+                 t-att-data-access-token="accessToken"/>
+        </template>
+    </data>
+</odoo>

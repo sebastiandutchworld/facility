@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+  <data noupdate="1">
+    <record id="ir_cron_task_end_date" model="ir.cron">
+      <field name="name">Task End Date</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="numbercall">-1</field>
+      <field name="state">code</field>
+      <field name="doall" eval="False"/>
+      <field name="model_id" ref="model_project_task"/>
+      <field name="code">model._cron_task_end_date()</field>
+      <field name="active" eval="False"/>
+    </record>
+    <record model="ir.cron" id="ir_cron_holiday_stats">
+      <field name="name">Holiday statistics</field>
+      <field name="interval_number">7</field>
+      <field name="interval_type">days</field>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="numbercall">-1</field>
+      <field name="state">code</field>
+      <field name="doall" eval="False"/>
+      <field name="model_id" ref="model_hr_leave_allocation"/>
+      <field name="code">model._holiday_report()</field>
+      <field name="active" eval="True"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sheet_timesheets">
+      <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="company" t-value="o.employee_company"/>
+          <t t-call="dws_dae_custom.external_layout_daed2">
+            <div class="page">
+              <h2>
+                Employee Sheet
+                <span t-esc="o.id"/>
+                -
+                <span t-esc="o.user_id.name"/>
+              </h2>
+              <br/>
+              <div>
+                <strong>Start Date:</strong>
+                <span t-esc="o.startdate"/>
+              </div>
+              <div>
+                <strong>End Date:</strong>
+                <span t-esc="o.enddate"/>
+              </div>
+              <div>
+                <strong>Status:</strong>
+                <!--t t-esc="dict(o.fields_get(allfields=['status'])['status']['selection'])[o.status]"/-->
+                <t t-esc="dict(o.fields_get(allfields=['status'])['status']['selection'])[o.status] if o.status else ''"/>
+              </div>
+              <div>
+                <strong>Notes:</strong>
+                <span t-esc="o.notes"/>
+              </div>
+              <br/>
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Reg</th>
+                    <th>Vac</th>
+                    <th>Adv</th>
+                    <th>Illness</th>
+                    <th>NW</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr t-foreach="o.hour_ids" t-as="l">
+                    <td>
+                      <span t-esc="l.task_id.name"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.date"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.fromtime"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.totime"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.regular"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.vacation"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.adv"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.illness"/>
+                    </td>
+                    <td>
+                      <span t-esc="l.nw"/>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <strong>Totals:</strong>
+                      </td>
+                      <td/>
+                      <td/>
+                      <td/>
+                    <td>
+                      <strong t-esc="sum(o.hour_ids.mapped('regular'))"/>
+                    </td>
+                      <td>
+                      <strong t-esc="sum(o.hour_ids.mapped('vacation'))"/>
+                    </td>
+                      <td>
+                      <strong t-esc="sum(o.hour_ids.mapped('adv'))"/>
+                    </td>
+                      <td>
+                      <strong t-esc="sum(o.hour_ids.mapped('illness'))"/>
+                    </td>
+                      <td>
+                      <strong t-esc="sum(o.hour_ids.mapped('nw'))"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+    <report id="custom_report_sheet_timesheets"
+            model="employee.sheet"
+            string="Employee Sheet"
+            report_type="qweb-pdf"
+            name="dws_dae_custom.report_sheet_timesheets"
+            file="dws_dae_custom.report_sheet_timesheets"
+            print_report_name="'Sheet_%s_%s' % (object.user_id.name, object.startdate)"/>
+    <template id="external_layout_daed">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="result['company']">
+            <t t-set="company" t-value="result['company']"/>
+        </t>
+        <t t-if="not result['company']">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+<!--        <t t-if="company.external_report_layout == 'background'">-->
+<!--            <t t-call="web.external_layout_background"><t t-raw="0"/></t>-->
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout == 'boxed'">-->
+            <t t-call="web.external_layout_boxed"><t t-raw="0"/></t>
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout == 'clean'">-->
+<!--            <t t-call="web.external_layout_clean"><t t-raw="0"/></t>-->
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout in (False, 'standard')">-->
+<!--            <t t-call="web.external_layout_standard"><t t-raw="0"/></t>-->
+<!--        </t>-->
+    </template>
+    <template id="external_layout_daed2">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-elif="o and 'employee_company' in o">
+            <t t-set="company" t-value="o.employee_company"/>
+        </t>
+        <t t-else="not o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+<!--        <t t-if="company.external_report_layout == 'background'">-->
+<!--            <t t-call="web.external_layout_background"><t t-raw="0"/></t>-->
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout == 'boxed'">-->
+            <t t-call="web.external_layout_boxed"><t t-raw="0"/></t>
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout == 'clean'">-->
+<!--            <t t-call="web.external_layout_clean"><t t-raw="0"/></t>-->
+<!--        </t>-->
+<!--        <t t-if="company.external_report_layout in (False, 'standard')">-->
+<!--            <t t-call="web.external_layout_standard"><t t-raw="0"/></t>-->
+<!--        </t>-->
+    </template>
+
+</odoo>

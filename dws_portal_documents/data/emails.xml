@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+         <!-- Template for notifying the admin about a sheet confirmed with the wrong number of hours -->
+        <record id="email_template_document_upload" model="mail.template">
+            <field name="name">Document upload notification</field>
+            <field name="subject">Document upload notification</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear admin,</p>
+                <p>Employee ${ctx.get('name')} uploaded a new document on the portal
+                </p>]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>

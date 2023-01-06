@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="action_employee_sheet" model="ir.actions.act_window">
+      <field name="name">Employee Sheet</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">employee.sheet</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record id="view_employee_sheet_tree" model="ir.ui.view">
+      <field name="name">employee.sheet.tree</field>
+      <field name="model">employee.sheet</field>
+      <field name="arch" type="xml">
+        <tree string="Employee Sheets">
+          <field name="id"/>
+          <field name="employee_company"/>
+          <field name="user_id"/>
+          <field name="startdate"/>
+          <field name="enddate"/>
+          <field name="status"/>
+          <field name="notes"/>
+        </tree>
+      </field>
+    </record>
+    <record id="view_employee_sheet_form" model="ir.ui.view">
+      <field name="name">employee.sheet.form</field>
+      <field name="model">employee.sheet</field>
+      <field name="arch" type="xml">
+        <form string="Portal Sheet">
+          <sheet>
+            <group>
+              <group>
+                <field name="id"/>
+                <field name="user_id"/>
+                <field name="startdate"/>
+                <field name="enddate"/>
+              </group>
+              <group>
+                <field name="status"/>
+                <field name="notes"/>
+              </group>
+              <br/>
+              <h2>Hour Lines</h2>
+              <!--<field name="hour_ids" attrs="{'invisible': [('employee_sheet_id', '=', [])]}"/>-->
+              <field name="hour_ids">
+                <tree>
+                  <field name="task_id"/>
+                  <field name="date"/>
+                  <field name="fromtime"/>
+                  <field name="totime"/>
+                  <field name="regular" sum="Total Regular"/>
+                  <field name="vacation" sum="Total Vacation"/>
+                  <field name="adv" sum="Total Adv"/>
+                  <field name="illness" sum="Total Illness"/>
+                  <field name="nw" sum="Total nw"/>
+                </tree>
+              </field>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <menuitem id="portal_menu"
+          name="Portal"
+          parent="hr_timesheet.timesheet_menu_root"
+          groups="hr_timesheet.group_hr_timesheet_user"
+          sequence="5"/>
+    <menuitem id="employee_sheet_menu_portal"
+          name="Portal Sheets"
+          action="action_employee_sheet"
+          parent="portal_menu"
+          groups="hr_timesheet.group_hr_timesheet_user"
+          sequence="20"/>
+    <record model="ir.ui.view" id="hr_timesheet_report_form_view">
+      <field name="name">Employee Sheet Invoice</field>
+      <field name="model">employee.sheet.invoice.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Hr Timesheet Status Report">
+          <sheet>
+            <p>Please confirm the creation of invoices for the selected timesheets</p>
+            <footer>
+              <button name="invoice_timesheets" type="object" string="Create" class="btn-primary"/>
+              <button string="_Cancel" class="btn-default" special="cancel"/>
+            </footer>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="action_create_invoices" model="ir.actions.act_window">
+        <field name="name">Create invoices</field>
+        <field name="res_model">employee.sheet.invoice.wizard</field>
+        <field name="binding_model_id" ref="model_employee_sheet"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

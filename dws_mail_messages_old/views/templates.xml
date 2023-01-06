@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="assets_backend" model="ir.asset">
+            <field name="name">Assets Backend</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/dws_mail_messages/static/src/css/message_reply.css</field>
+            <field name="path">/dws_mail_messages/static/src/js/list_model.js</field>
+            <field name="path">/dws_mail_messages/static/src/js/list_controller.js</field>
+            <field name="path">/dws_mail_messages/static/src/js/list_renderer.js</field>
+            <field name="path">/dws_mail_messages/static/src/components/message/message.js</field>
+            <field name="path">/dws_mail_messages/static/src/models/message/message.js</field>
+        </record>
+    </data>
+
+<!--    <template id="assets_backend" name="Assets Backend" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="//script[last()]" position="after">-->
+<!--            <link type="text/css" rel='stylesheet' href='/dws_mail_messages/static/src/css/message_reply.css'/>-->
+<!--            <script type="text/javascript" src="/dws_mail_messages/static/src/js/list_model.js"/>-->
+<!--            <script type="text/javascript" src="/dws_mail_messages/static/src/js/list_controller.js"/>-->
+<!--            <script type="text/javascript" src="/dws_mail_messages/static/src/js/list_renderer.js"/>-->
+<!--            <script type="text/javascript" src="/dws_mail_messages/static/src/components/message/message.js"></script>-->
+<!--            <script type="text/javascript" src="/dws_mail_messages/static/src/models/message/message.js"></script>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+</odoo>

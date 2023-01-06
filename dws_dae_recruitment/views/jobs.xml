@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>hr.applicant</value>
+            <value eval="[
+                'description',
+                'email_from',
+                'partner_name',
+                'partner_phone',
+                'job_id',
+                'department_id',
+                'zipcode',
+                'country_id',
+                'firstname',
+                'surname_prefix',
+                'surname',
+                'street',
+                'housenumber',
+                'street2',
+                'city',
+                'state',
+                'nationality',
+                'birthday'
+            ]"/>
+        </function>
+        <template id="portal_job_list_ext" name="portal_job_list_ext" inherit_id="website_hr_recruitment.apply">
+            <xpath expr="//h1" position="replace">
+                <h1 class="text-center mt-2">
+                Application Form
+            </h1>
+            </xpath>
+            <xpath expr="//div[@data-type='binary']" position="after">
+                <div class="form-group col-2 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <div class="col-sm">
+                            <input id="privacy" type="checkbox" class="form-control s_website_form_input" name="privacy" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-10" data-type="char" data-name="Field" style="padding-left:24px;">
+                    When you register with Daedalus, we process your personal data. Of course we handle your data with care: read all about this in our privacy statement.
+                </div>
+            </xpath>
+            <xpath expr="//div[@data-type='binary']" position="replace">
+            </xpath>
+            <xpath expr="//div[contains(@class, 'form-group') and .//input[@id='recruitment1']]" position="replace">
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="firstname">
+                            <span class="s_website_form_label_content">First name</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="firstname" type="char" class="form-control s_website_form_input" name="firstname" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="surname_prefix">
+                            <span class="s_website_form_label_content">Surname Prefix</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="surname_prefix" type="char" class="form-control s_website_form_input" name="surname_prefix"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="surname">
+                            <span class="s_website_form_label_content">Surname</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="surname" type="char" class="form-control s_website_form_input" name="surname" required=""/>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="street">
+                            <span class="s_website_form_label_content">Street</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="street" type="char" class="form-control s_website_form_input" name="street" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="housenumber">
+                            <span class="s_website_form_label_content">Housenumber</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="housenumber" type="char" class="form-control s_website_form_input" name="housenumber" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="street2">
+                            <span class="s_website_form_label_content">Street 2</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="street2" type="char" class="form-control s_website_form_input" name="street2"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="city">
+                            <span class="s_website_form_label_content">City</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="city" type="char" class="form-control s_website_form_input" name="city" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 100px" for="zipcode">
+                            <span class="s_website_form_label_content">Zip</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="zipcode" type="char" class="form-control s_website_form_input" name="zipcode" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 100px" for="country">
+                            <span class="s_website_form_label_content">Country</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <select id="country_id" name="country_id" required="" class="form-control s_website_form_input">
+                              <option value="">Select country...</option>
+                                <t t-foreach="countries" t-as="country">
+                                    <option t-esc="country.name" t-att-value="country.id"/>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-6 s_website_form_field s_website_form_required" data-type="date" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="birthday">
+                            <span class="s_website_form_label_content">Date of Birth</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input id="birthday" type="date" class="form-control s_website_form_input" name="birthday" data-date-format="YYYY-MM" placeholder="YYYY-MM" required=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6 s_website_form_field s_website_form_required" data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="nationality">
+                            <span class="s_website_form_label_content">Nationality</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <select id="nationality" name="nationality" required="" class="form-control s_website_form_input">
+                              <option value="">Select country...</option>
+                                <t t-foreach="countries" t-as="country">
+                                    <option t-esc="country.name" t-att-value="country.id"/>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </xpath>
+        </template>
+        <template id="apply_ext" name="apply_ext" inherit_id="website_hr_recruitment.detail">
+            <xpath expr="//div[@class='oe_structure']" position="after">
+                <p align="middle" t-if="scenario == 1">You can only apply for a job when you have finalized and send-in your resume. Please go to My account and check if you have already send-in your resume at  Manage Resume &amp; Skills.</p>
+                <p align="middle" t-if="scenario == 2">We associated this job position to your already existing application. Thank you!</p>
+                <p align="middle" t-if="scenario == 3">You have already applied for a job position. But if you also are interested in this job, please contact our <a href="mailto:hrapprover@daedalus.nl">HR Recruitment</a> team</p>
+            </xpath>
+        </template>
+
+        <template id="job_detail_ext" name="job_detail_ext" inherit_id="website_hr_recruitment.index">
+            <xpath expr="//div[@id='jobs_grid']//div[1]" position="replace"/>
+            <xpath expr="//div[@id='jobs_grid']" position="inside">
+                <t t-if="request.env.user.login == 'public'">
+                    Is your discipline not listed, but do you want to be registered in our database. Don't worry! <a href="/jobs/apply/generic">Apply</a> here to sign-up give yourself a chance to work for us!
+                </t>
+            </xpath>
+        </template>
+
+        <record id="website_page_thankyou_inherit" model="ir.ui.view">
+            <field name="name">website.page.thankyou.inherit</field>
+            <field name="inherit_id" ref="website_hr_recruitment.thankyou_ir_ui_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='website_hr_recruitment.thankyou']" position="replace">
+                    <t name="Thank you (Recruitment)" t-name="website_hr_recruitment.thankyou">
+                        <t t-call="website.layout">
+                            <div id="wrap">
+                                <div class="oe_structure">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h1 class="text-center">Congratulations!</h1>
+                                                <p class="text-center">
+                                                    Your account has been created. You will now start registering.
+                                                    You will receive an email message in your mailbox with which you can complete your registration.</p><p class="text-center" style="font-size:11px">
+(if you have not received an email, please check your spam box)</p>
+                                            </div>
+                                            <t t-if="request.session.get('form_builder_model_model', '') == 'hr.applicant'">
+                                                <t t-set="job" t-value="request.website._website_form_last_record().sudo().job_id"/>
+                                                <t t-set="responsible" t-value="job and job.user_id.website_published and job.user_id "/>
+                                            </t>
+                                            <t t-if="responsible">
+                                                <div class="col-lg-12">
+                                                    <h3 class="mb32 text-center">Your application has been sent to:</h3>
+                                                </div>
+                                                <div class="col-lg-1 offset-lg-4">
+                                                    <p t-field="responsible.image_128" t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded-circle d-block mx-auto o_image_64_cover'}"/>
+                                                </div>
+                                                <div class="col-lg-5 o_responsible_data">
+                                                    <h4 class="mt0" t-field="responsible.name"/>
+                                                    <p t-field="responsible.function"/>
+                                                    <t t-if='responsible.email'>
+                                                        <i class="fa fa-envelope" role="img" aria-label="Email" title="Email"></i> <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
+                                                    </t>
+                                                    <t t-if='responsible.phone'>
+                                                        <br/><i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i> <span t-field="responsible.phone"/>
+                                                    </t>
+                                                </div>
+                                                <div class="col-lg-12 mt32 text-center">
+                                                    <span>
+                                                        We usually reply between one and three days.<br/>
+                                                        Feel free to contact him/her if you have further questions.
+                                                    </span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        <div class="row" id="o_recruitment_thank_cta">
+                                            <div class="col-lg-12 text-center mt32 mb32">
+                                                <a role="button" href="/" class="btn btn-primary btn-lg">Continue To Our Website</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.applicant.form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_makeMeeting']" position="before">
+                    <button class="d-none d-md-inline oe_stat_button"
+                        type="object" name="action_view_employee" icon="fa-address-card"
+                        string="Employee CV"
+                        groups="sales_team.group_sale_salesman"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_job_view_form_ext" model="ir.ui.view">
+            <field name="name">hr.job.form.ext</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[last()]" position="after">
+                    <page string="CRM Lead">
+                        <field name="vacancies" mode="tree,form">
+                        <tree string="Vacancies" default_order="lead_id">
+                            <field name="lead_id"/>
+                            <field name="qty"/>
+                            <field name="employee_ids" widget="many2many_tags"/>
+                        </tree>
+                    </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="dws_view_candidates" model="ir.ui.view">
+            <field name="name">dws_view_candidates</field>
+            <field name="model">hr.employee</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree string="Candidates" multi_edit="1" sample="1">
+                    <field name="name" readonly="1"/>
+                    <field name="lead_id" widget="many2many_tags" readonly="1"/>
+                    <field name="vacancy_id" widget="many2many_tags" readonly="1"/> 
+                    <field name="application_status" readonly="1"/>
+                    <field name="latest_task_enddate" readonly="1"/>
+                    <field name="latest_task" readonly="1"/>
+                    <field name="contract_job_id" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+    <!-- <record id="dws_search_candidates" model="ir.ui.view">
+        <field name="name">dws_search_candidates</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <search string="Search Candidates">
+                <field name="job_id"/> 
+                <field name="vacancy_id"/>
+                <field name="lead_id"/>
+                <field name="application_status"/>
+                <field name="contract_job_id"/>
+           </search>
+        </field>
+    </record> -->
+
+
+        <record id="hr_recruitment_candidates_act" model="ir.actions.act_window">
+            <field name="name">Candidates</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{"search_default_filter_candidates":1}</field>
+            <field name="view_id" ref="dws_view_candidates"/>
+<!--            <field name="help" type="html">-->
+<!--              <p class="o_view_nocontent_smiling_face">-->
+<!--                Add a new stage in the recruitment process-->
+<!--              </p><p>-->
+<!--                Don't forget to specify the department if your recruitment process-->
+<!--                is different according to the job position.-->
+<!--              </p>-->
+<!--            </field>-->
+        </record>
+        <menuitem
+        name="Candidates"
+        parent="hr_recruitment.menu_hr_recruitment_root"
+        action="hr_recruitment_candidates_act"
+        groups="base.group_user"
+        id="dws_candidates" sequence="10"/>
+    </data>
+</odoo>

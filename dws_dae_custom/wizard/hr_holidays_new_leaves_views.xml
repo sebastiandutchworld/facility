@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_hr_holidays_leave" model="ir.ui.view">
+    <field name="name">hr.holidays.leave.form</field>
+    <field name="model">hr.holidays.leave</field>
+    <field name="arch" type="xml">
+      <form string="Leaves allocation">
+        <group>
+          <field name="allocation_year"/>
+          <field name="ll"/>
+          <field name="all"/>
+          <field name="adv"/>
+<!--          <field name="leave_type"/>-->
+        </group>
+        <footer>
+          <button name="create_annual_leaves" string="Create" type="object" class="btn-primary" confirm="U gaat de verloven voor alle medewerkers voor het opgeven jaar aanmaken. Wilt u doorgaan?"/>
+          <button string="Cancel" special="cancel" class="btn-default"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record id="action_hr_holidays_leave" model="ir.actions.act_window">
+    <field name="name">Leaves Allocation</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">hr.holidays.leave</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+  <menuitem
+          id="menu_action_hr_holidays_leave"
+          groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"
+          name="Leaves Allocation per Year"
+          parent="hr_holidays.menu_hr_holidays_approvals"
+          action="action_hr_holidays_leave"
+          sequence="3"/>
+</odoo>

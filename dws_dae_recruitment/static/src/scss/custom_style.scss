@@ -1,0 +1,58 @@
+
+.type_header{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+.o_resume_group_header_portal .o_group_name{
+    display: table-cell;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    
+    padding-left: .5rem;
+    background-color: #e9ecef;
+    border: 0;
+}
+.line_row .o_resume_timeline_cell:before{
+    position: absolute;
+    top: 0.5rem;
+    left: 0.8rem;
+    bottom: auto;
+    right: auto;
+    width: 1px;
+    height: 100%;
+    margin-left: -.01rem;
+    background-color: #dee2e6;
+    content: "";
+}
+tr.o_data_row.line_row:last-child .o_resume_timeline_cell:before {
+    height: 0.5rem;
+}
+.line_row .o_resume_timeline_cell div {
+    width: 0.6rem;
+    height: 0.6rem;
+}
+.line_row .o_resume_timeline_cell{
+    padding: 0.5rem;
+}
+.line_row .o_resume_line_title{
+    line-height:1;
+}
+.line_row:hover{
+    color: #4c4c4c;
+    background-color: rgba(0, 0, 0, 0.04);
+    
+}
+.line_row a{
+    text-decoration:none;
+}
+.skill_lines{
+    border-bottom:1px solid #dee2e6;
+}
+.skill_lines:last-child{
+    border-bottom:none;
+}

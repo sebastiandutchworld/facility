@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_public_user,hr.employee_public,hr.model_hr_employee_public,base.group_portal,1,0,0,0
+access_hr_resume_line_public_user,hr.resume.line.public,hr_skills.model_hr_resume_line,base.group_portal,1,0,0,1
+access_hr_employee_skill_public_user,hr.employee.skill.public,hr_skills.model_hr_employee_skill,base.group_portal,1,0,0,1
+access_hr_resume_line_type_public_user,hr.resume.line.type.public,hr_skills.model_hr_resume_line_type,base.group_portal,1,0,0,0
+access_hr_skill_type_public_user,hr.skill.type.public,hr_skills.model_hr_skill_type,base.group_portal,1,0,0,0
+access_hr_skill_public_user,hr.skill.public,hr_skills.model_hr_skill,base.group_portal,1,0,0,0
+access_hr_skill_level_public_user,hr.skill.level.public,hr_skills.model_hr_skill_level,base.group_portal,1,0,0,0
+access_hr_vacancy,hr.vacancy,model_hr_vacancy,hr_timesheet.group_timesheet_manager,1,1,1,1

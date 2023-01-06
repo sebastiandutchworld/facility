@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+         <!-- Template for notifying the admin about a sheet confirmed with the wrong number of hours -->
+        <record id="email_template_data_cv_sent_in" model="mail.template">
+            <field name="name">CV change notification</field>
+            <field name="subject">New CV notification</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear admin,</p>
+                <p>Employee ${ctx.get('employee_name')} changed his CV
+                </p>]]>
+            </field>
+        </record>
+
+        <record id="email_template_data_cv_sent_in_recruitment" model="mail.template">
+            <field name="name">CV change receive acknowledgement recruitment</field>
+            <field name="subject">New CV notification Recruitment</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
+            <field name="lang">{object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear Recruitment,</p>
+                 <p>Employee {{ctx.get('employee_name')}} changed his CV
+                </p>]]>
+            </field>
+        </record>
+
+        <record id="email_template_data_cv_sent_in_employee" model="mail.template">
+            <field name="name">CV change receive acknowledgement</field>
+            <field name="subject">We received your CV update</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear ${ctx.get('employee_name')},</p>
+                 <p>Thank you very much for update your cv on our database.  We have received your details in good order.<br /><br />
+                    With kind regards<br />
+                    Daedalus Aviation Group BV
+                 </p>
+                ]]>
+            </field>
+        </record>
+
+
+        <record id="email_template_data_cv_reminder7" model="mail.template">
+            <field name="name">Applicant CV reminder 7 days</field>
+            <field name="subject">Please finalize your CV</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear ${ctx.get('employee_name')},</p>
+                 <p>CV reminder 7 days
+                 </p>
+                ]]>
+            </field>
+        </record>
+        <record id="email_template_data_cv_reminder14" model="mail.template">
+            <field name="name">Applicant CV reminder 14 days</field>
+            <field name="subject">Please finalize your CV</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear ${ctx.get('employee_name')},</p>
+                 <p>CV reminder 14 days
+                 </p>
+                ]]>
+            </field>
+        </record>
+        <record id="email_template_data_cv_reminder21" model="mail.template">
+            <field name="name">Applicant CV reminder 21 days</field>
+            <field name="subject">Please finalize your CV</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <!--field name="user_signature" eval="False"/-->
+            <field name="body_html"><![CDATA[
+                 <p>Dear ${ctx.get('employee_name')},</p>
+                 <p>CV reminder 21 days
+                 </p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

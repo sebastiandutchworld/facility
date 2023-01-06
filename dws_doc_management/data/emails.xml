@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+         <!-- Template for notifying hr when documents need to be renewed -->
+        <record id="email_template_document_renewal" model="mail.template">
+            <field name="name">Document Renewal</field>
+            <field name="subject">Document needs renewal</field>
+            <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+            <field name="model_id" ref="dws_doc_management.model_documents_document"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear HR,</p><br/>
+                <p>Document ${object.name} needs to be renewed before ${object.valid_until}.<br/></p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

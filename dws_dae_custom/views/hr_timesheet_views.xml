@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+        <record id="project_task_view_form_extended" model="ir.ui.view">
+            <field name="name">project.task.view.form.extended</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="timesheet_grid.project_task_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_timer_start']" position='replace'>
+                </xpath>
+            </field>
+        </record>
+  </data>
+</odoo>
