@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class SelectCompany(models.TransientModel):
     _name = 'select.company'
     company_id = fields.Many2one('res.company', string='Company', index=True,
-                                 default=lambda self: self.default_company_id(),domain="['|',('partner_id.name', '=', 'Daedalus'),('partner_id.name', '=', 'EML')]")
+                                 default=lambda self: self.default_company_id())
 
     def default_company_id(self):
         employee_id = self.env.context['employee_id']
